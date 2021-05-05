@@ -6,6 +6,6 @@ namespace Plannial.Core.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Reminder> Reminders { get; set; } = new List<Reminder>();
+        public ICollection<Reminder> Reminders { get; set; } = new List<Reminder>();             
     }
 }

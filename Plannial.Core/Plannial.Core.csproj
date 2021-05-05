@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="EntityTypeConfigs\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />

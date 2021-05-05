@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Entities;
+using Plannial.Core.EntityTypeConfigs;
 
 namespace Plannial.Core.Data
 {
@@ -16,12 +17,14 @@ namespace Plannial.Core.Data
         public DbSet<Reminder> Reminders { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)                  
         {
             base.OnModelCreating(builder);
 
             builder.Entity<Reminder>().Property(x => x.Priority)
                 .HasConversion<string>();
+
+            new MessageEntityTypeConfig().Configure(builder.Entity<Message>());
         }
     }
 }
