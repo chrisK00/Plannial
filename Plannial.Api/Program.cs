@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Plannial.Core.Data;
+using Plannial.Core.Entities;
 
 namespace Plannial.Api
 {
@@ -13,10 +16,17 @@ namespace Plannial.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using var scope = host.Services.CreateScope();
+
+            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            context.Database.EnsureCreated();
+            context.Subjects.Add(new Subject { Description = "Its so bad ", Exams = new List<Exam> { new Exam() } });
+            context.SaveChanges();
+            host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>            
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
