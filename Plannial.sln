@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plannial.Api", "Plannial.Api\Plannial.Api.csproj", "{528B9C49-F289-44A4-95E5-90AF4F046B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plannial.Core", "Plannial.Core\Plannial.Core.csproj", "{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{528B9C49-F289-44A4-95E5-90AF4F046B06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528B9C49-F289-44A4-95E5-90AF4F046B06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528B9C49-F289-44A4-95E5-90AF4F046B06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528B9C49-F289-44A4-95E5-90AF4F046B06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {619C056F-62B8-438A-B310-25D6B5CD984B}
+	EndGlobalSection
+EndGlobal
