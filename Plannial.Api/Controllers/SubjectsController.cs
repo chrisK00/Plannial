@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Plannial.Core.Commands;
 using Plannial.Core.Queries;
+using Plannial.Core.Requests;
 using Plannial.Core.Responses;
 
 namespace Plannial.Api.Controllers
@@ -18,11 +20,19 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<SubjectResponse>> GetSubjectById(int id)
+        [HttpGet(Name = nameof(GetSubjects))]
+        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects()
         {
-            var subject = await _mediator.Send(new GetSubjectById.Query(id));
-            return subject;
+            //get userid from token
+            var subjects = await _mediator.Send(new GetSubjects.Query());
+            return Ok(subjects);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<SubjectResponse>> AddSubject(AddSubjectRequest addSubjectRequest)
+        {
+            //get userid from token
+            var subject = await _mediator.Send(new AddSubject.Command(addSubjectRequest.Name, addSubjectRequest.Description, ));
         }
     }
 }

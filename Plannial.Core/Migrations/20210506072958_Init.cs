@@ -73,7 +73,7 @@ namespace Plannial.Core.Migrations
                     DueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Priority = table.Column<string>(type: "TEXT", nullable: false),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: true),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,8 +85,8 @@ namespace Plannial.Core.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reminders_Users_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_Reminders_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -100,14 +100,14 @@ namespace Plannial.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subjects_Users_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_Subjects_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -176,19 +176,19 @@ namespace Plannial.Core.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reminders_AppUserId",
-                table: "Reminders",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reminders_CategoryId",
                 table: "Reminders",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_AppUserId",
+                name: "IX_Reminders_UserId",
+                table: "Reminders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_UserId",
                 table: "Subjects",
-                column: "AppUserId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -17,12 +17,21 @@ namespace Plannial.Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using var scope = host.Services.CreateScope();
 
-            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-            context.Database.EnsureCreated();
-            context.Subjects.Add(new Subject { Description = "Its so bad ", Exams = new List<Exam> { new Exam() } });
-            context.SaveChanges();
+            using var scope = host.Services.CreateScope();
+            try
+            {
+                var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+                context.Database.EnsureCreated();
+                context.Subjects.Add(new Subject { Description = "Its so bad ", Exams = new List<Exam> { new Exam() } });
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(e, "Error while seeding");
+            }
+
             host.Run();
         }
 

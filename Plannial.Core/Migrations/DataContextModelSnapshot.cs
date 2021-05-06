@@ -129,9 +129,6 @@ namespace Plannial.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("CategoryId")
                         .HasColumnType("INTEGER");
 
@@ -148,11 +145,14 @@ namespace Plannial.Core.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reminders");
                 });
@@ -163,18 +163,18 @@ namespace Plannial.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Subjects");
                 });
@@ -210,13 +210,13 @@ namespace Plannial.Core.Migrations
 
             modelBuilder.Entity("Plannial.Core.Entities.Reminder", b =>
                 {
-                    b.HasOne("Plannial.Core.Entities.AppUser", null)
-                        .WithMany("Reminders")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Plannial.Core.Entities.Category", "Category")
-                        .WithMany("Reminders")
+                        .WithMany()
                         .HasForeignKey("CategoryId");
+
+                    b.HasOne("Plannial.Core.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Category");
                 });
@@ -224,8 +224,8 @@ namespace Plannial.Core.Migrations
             modelBuilder.Entity("Plannial.Core.Entities.Subject", b =>
                 {
                     b.HasOne("Plannial.Core.Entities.AppUser", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("AppUserId");
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Plannial.Core.Entities.AppUser", b =>
@@ -233,15 +233,6 @@ namespace Plannial.Core.Migrations
                     b.Navigation("MessagesRecieved");
 
                     b.Navigation("MessagesSent");
-
-                    b.Navigation("Reminders");
-
-                    b.Navigation("Subjects");
-                });
-
-            modelBuilder.Entity("Plannial.Core.Entities.Category", b =>
-                {
-                    b.Navigation("Reminders");
                 });
 
             modelBuilder.Entity("Plannial.Core.Entities.Subject", b =>

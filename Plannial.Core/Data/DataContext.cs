@@ -17,13 +17,15 @@ namespace Plannial.Core.Data
         public DbSet<Reminder> Reminders { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)                  
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Reminder>().Property(x => x.Priority)
-                .HasConversion<string>();
+            builder.Entity<Subject>().HasOne<AppUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId);
 
+            new ReminderEntityTypeConfig().Equals(builder.Entity<Reminder>());
             new MessageEntityTypeConfig().Configure(builder.Entity<Message>());
         }
     }

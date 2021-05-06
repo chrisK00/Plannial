@@ -1,9 +1,10 @@
 ﻿using System;
+using Plannial.Core.Entities;
 using Plannial.Core.Helpers;
 
-namespace Plannial.Core.Entities
+namespace Plannial.Core.Responses
 {
-    public class Reminder
+    public class ReminderResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,6 +12,5 @@ namespace Plannial.Core.Entities
         public DateTime DueDate { get; set; }
         public Priority Priority { get; set; }
         public Category Category { get; set; }
-        public string UserId { get; set; }
     }
 }
