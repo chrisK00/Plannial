@@ -29,6 +29,9 @@ namespace Plannial.Core.Data
               .HasMaxLength(255)
               .IsRequired();
 
+            builder.Entity<AppUser>().Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
             new ReminderEntityTypeConfig().Configure(builder.Entity<Reminder>());
             new MessageEntityTypeConfig().Configure(builder.Entity<Message>());

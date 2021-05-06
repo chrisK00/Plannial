@@ -19,6 +19,7 @@ namespace Plannial.Core.Migrations
             modelBuilder.Entity("Plannial.Core.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")

@@ -9,8 +9,8 @@ using Plannial.Core.Data;
 namespace Plannial.Core.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210506183928_CascadeUser")]
-    partial class CascadeUser
+    [Migration("20210506213948_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,7 @@ namespace Plannial.Core.Migrations
             modelBuilder.Entity("Plannial.Core.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")

@@ -14,7 +14,7 @@ namespace Plannial.Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -23,16 +23,15 @@ namespace Plannial.Api
             {
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
                 context.Database.EnsureCreated();
-                context.Subjects.Add(new Subject { Description = "Its so bad ", Exams = new List<Exam> { new Exam() } });
-                context.SaveChanges();
+                await DataSeed.SeedAsync(context);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(e, "Error while seeding");
+                logger.LogError(ex, "Error while seeding");
             }
 
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
