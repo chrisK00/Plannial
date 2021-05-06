@@ -24,15 +24,16 @@ namespace Plannial.Api.Controllers
         public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects()
         {
             //get userid from token
-            var subjects = await _mediator.Send(new GetSubjects.Query());
-            return Ok(subjects);
+            //  var subjects = await _mediator.Send(new GetSubjects.Query());
+            return Ok(); //return Ok(subjects);
         }
 
         [HttpPost]
         public async Task<ActionResult<SubjectResponse>> AddSubject(AddSubjectRequest addSubjectRequest)
         {
             //get userid from token
-            var subject = await _mediator.Send(new AddSubject.Command(addSubjectRequest.Name, addSubjectRequest.Description, ));
+            //    var subject = await _mediator.Send(new AddSubject.Command(addSubjectRequest.Name, addSubjectRequest.Description, ));
+            return Ok();
         }
     }
 }

@@ -21,11 +21,16 @@ namespace Plannial.Core.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Subject>().HasOne<AppUser>()
-                .WithMany()
-                .HasForeignKey(x => x.UserId);
+            builder.Entity<Exam>().Property(x => x.Name)
+                .HasMaxLength(255)
+                .IsRequired();
 
-            new ReminderEntityTypeConfig().Equals(builder.Entity<Reminder>());
+            builder.Entity<Homework>().Property(x => x.Name)
+              .HasMaxLength(255)
+              .IsRequired();
+
+            new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
+            new ReminderEntityTypeConfig().Configure(builder.Entity<Reminder>());
             new MessageEntityTypeConfig().Configure(builder.Entity<Message>());
         }
     }

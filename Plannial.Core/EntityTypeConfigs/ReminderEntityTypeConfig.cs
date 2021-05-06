@@ -14,7 +14,13 @@ namespace Plannial.Core.EntityTypeConfigs
 
             builder.HasOne<AppUser>()
                 .WithMany()
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(x => x.Name)
+                .HasMaxLength(255)
+                .IsRequired();
 
             builder.HasOne(x => x.Category)
                 .WithMany();

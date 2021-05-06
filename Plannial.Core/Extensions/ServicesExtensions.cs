@@ -8,6 +8,7 @@ using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Queries;
 using Plannial.Core.Repositories;
+using Plannial.Core.Services;
 
 namespace Plannial.Core.Extensions
 {
@@ -15,7 +16,7 @@ namespace Plannial.Core.Extensions
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<ITokenService, ITokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddMediatR(typeof(GetSubjects).Assembly);
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
