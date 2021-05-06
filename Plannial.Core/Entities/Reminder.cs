@@ -3,14 +3,12 @@ using Plannial.Core.Helpers;
 
 namespace Plannial.Core.Entities
 {
-    public class Reminder
+    public class Reminder : BaseOwnedEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public Priority Priority { get; set; }
         public Category Category { get; set; }
-        public string UserId { get; set; }
     }
 }

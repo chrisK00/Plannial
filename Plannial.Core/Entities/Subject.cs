@@ -2,13 +2,11 @@
 
 namespace Plannial.Core.Entities
 {
-    public class Subject
+    public class Subject : BaseOwnedEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Exam> Exams { get; set; } = new List<Exam>();
         public ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
-        public string UserId { get; set; }
     }
 }

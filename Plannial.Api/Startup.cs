@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Plannial.Api.Middlewares;
 using Plannial.Core.Data;
 using Plannial.Core.Extensions;
 using Plannial.Core.Validators;
@@ -32,6 +33,7 @@ namespace Plannial.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureServices();
+            services.ConfigureIdentityServices(Configuration);
            
             services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source = Plannial.db"));
             services.AddControllers()
@@ -53,10 +55,13 @@ namespace Plannial.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Plannial.Api v1"));
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
