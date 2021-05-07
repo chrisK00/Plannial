@@ -7,8 +7,8 @@ using Plannial.Core.Responses;
 
 namespace Plannial.Api.Controllers
 {
-    [Route("api/subjects/{subjectId}/[controller]")]
-    public class ExamsController : ControllerBase
+
+    public class ExamsController : BaseApiController
     {
         private readonly IMediator _mediator;
 
@@ -17,7 +17,7 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("{subjectId}")]
         public async Task<ActionResult<ExamResponse>> AddExam(AddExamRequest addExamRequest, int subjectId, CancellationToken cancellationToken)
         {
             var exam = new ExamResponse { Id = 5 };

@@ -41,6 +41,7 @@ namespace Plannial.Api.Middlewares
                     InvalidOperationException => (int)HttpStatusCode.BadRequest,
                     DbUpdateException => (int)HttpStatusCode.BadRequest,
                     OperationCanceledException => (int)HttpStatusCode.BadGateway,
+                    UnauthorizedAccessException => (int)HttpStatusCode.Forbidden,
                     _ => (int)HttpStatusCode.InternalServerError
                 };
 

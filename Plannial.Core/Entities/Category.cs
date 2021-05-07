@@ -2,9 +2,8 @@
 
 namespace Plannial.Core.Entities
 {
-    public class Category
+    public class Category : BaseOwnedEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

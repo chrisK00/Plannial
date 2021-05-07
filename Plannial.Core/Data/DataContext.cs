@@ -21,18 +21,13 @@ namespace Plannial.Core.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Exam>().Property(x => x.Name)
-                .HasMaxLength(255)
-                .IsRequired();
-
-            builder.Entity<Homework>().Property(x => x.Name)
-              .HasMaxLength(255)
-              .IsRequired();
-
             builder.Entity<AppUser>().Property(x => x.Id)
                 .ValueGeneratedOnAdd();
 
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
+            new CategoryEntityTypeConfig().Configure(builder.Entity<Category>());
+            new ExamEntityTypeConfig().Configure(builder.Entity<Exam>());
+            new HomeworkEntityTypeConfig().Configure(builder.Entity<Homework>());
             new ReminderEntityTypeConfig().Configure(builder.Entity<Reminder>());
             new MessageEntityTypeConfig().Configure(builder.Entity<Message>());
         }

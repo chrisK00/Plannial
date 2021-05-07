@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using Plannial.Core.Requests;
 
-namespace Plannial.Core.Validators
+namespace Plannial.Core.Requests.Validators
 {
     public class AddSubjectRequestValidator : AbstractValidator<AddSubjectRequest>
     {
