@@ -9,6 +9,6 @@ namespace Plannial.Core.Interfaces
     public interface ISubjectRepository
     {
         Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken);
-        Task AddSubjectAsync(Subject subject);
+        Task AddSubjectAsync(Subject subject, CancellationToken cancellationToken);
     }
 }

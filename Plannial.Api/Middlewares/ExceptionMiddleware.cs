@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -38,6 +39,8 @@ namespace Plannial.Api.Middlewares
                 {
                     KeyNotFoundException => (int)HttpStatusCode.NotFound,
                     InvalidOperationException => (int)HttpStatusCode.BadRequest,
+                    DbUpdateException => (int)HttpStatusCode.BadRequest,
+                    OperationCanceledException => (int)HttpStatusCode.BadGateway,
                     _ => (int)HttpStatusCode.InternalServerError
                 };
 

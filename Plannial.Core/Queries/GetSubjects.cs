@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -29,7 +27,7 @@ namespace Plannial.Core.Queries
 
             async Task<IEnumerable<SubjectResponse>> IRequestHandler<Query, IEnumerable<SubjectResponse>>.Handle(Query request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation($"Getting subjects for: {request.UserId}");
+                _logger.LogInformation($"Getting subjects");
                 return await _subjectRepository.GetSubjectResponsesAsync(request.UserId, cancellationToken);
             }
         }

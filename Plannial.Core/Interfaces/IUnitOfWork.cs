@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Plannial.Core.Interfaces
 {
     public interface IUnitOfWork
     {
-        Task<bool> SaveChangesAsync();
+        Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

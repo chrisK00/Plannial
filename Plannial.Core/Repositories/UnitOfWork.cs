@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Plannial.Core.Data;
 using Plannial.Core.Interfaces;
 
@@ -12,9 +13,9 @@ namespace Plannial.Core.Repositories
         {
             _context = context;
         }
-        public async Task<bool> SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task AddSubjectAsync(Subject subject)
+        public async Task AddSubjectAsync(Subject subject, CancellationToken cancellationToken)
         {
-            await _context.AddAsync(subject);
+            await _context.AddAsync(subject, cancellationToken);
         }
 
         public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ namespace Plannial.Core.Repositories
                     {
                         Id = h.Id
                     }).ToList()
-                }).ToListAsync();
+                }).ToListAsync(cancellationToken);
         }
     }
 }

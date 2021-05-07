@@ -12,7 +12,7 @@ using Plannial.Core.Services;
 
 namespace Plannial.Core.Extensions
 {
-    public static class ServicesExtensions
+    public static class ServiceExtensions
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
@@ -20,6 +20,7 @@ namespace Plannial.Core.Extensions
             services.AddMediatR(typeof(GetSubjects).Assembly);
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             //register all app services here
             return services;

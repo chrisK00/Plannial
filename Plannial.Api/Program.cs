@@ -20,7 +20,7 @@ namespace Plannial.Api
 
             using var scope = host.Services.CreateScope();
             try
-            {
+            { 
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
                 context.Database.EnsureCreated();
                 await DataSeed.SeedAsync(context);
