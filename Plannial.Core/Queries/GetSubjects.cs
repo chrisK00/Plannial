@@ -30,7 +30,7 @@ namespace Plannial.Core.Queries
             async Task<IEnumerable<SubjectResponse>> IRequestHandler<Query, IEnumerable<SubjectResponse>>.Handle(Query request, CancellationToken cancellationToken)
             {
                 _logger.LogInformation($"Getting subjects for: {request.UserId}");
-                return await _subjectRepository.GetSubjectResponsesAsync(request.UserId);
+                return await _subjectRepository.GetSubjectResponsesAsync(request.UserId, cancellationToken);
             }
         }
     }

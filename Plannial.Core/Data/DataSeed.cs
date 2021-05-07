@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
+using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Entities;
 
 namespace Plannial.Core.Data
@@ -11,6 +10,10 @@ namespace Plannial.Core.Data
     {
         public static async Task SeedAsync(DataContext context)
         {
+            if (await context.Users.AnyAsync())
+            {
+                return;
+            }
 
             var users = new Faker<AppUser>()
                  .RuleFor(x => x.Email, x => x.Person.Email)
@@ -50,6 +53,5 @@ namespace Plannial.Core.Data
                 .RuleFor(x => x.Name, x => x.Random.Word())
                 .RuleFor(x => x.Description, x => x.Lorem.Sentence());
         }
-
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
+using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Responses;
 
@@ -17,7 +19,12 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId)
+        public async Task AddSubjectAsync(Subject subject)
+        {
+            await _context.AddAsync(subject);
+        }
+
+        public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken)
         {
             return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams)
                 .Where(x => x.UserId == userId)

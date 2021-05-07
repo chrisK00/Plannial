@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Plannial.Core.Entities;
 
-namespace Plannial.Core.EntityTypeConfigs
+namespace Plannial.Core.Data.EntityTypeConfigs
 {
     public class MessageEntityTypeConfig : IEntityTypeConfiguration<Message>
     {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Plannial.Core.Commands;
-using Plannial.Core.Queries;
 using Plannial.Core.Requests;
 using Plannial.Core.Responses;
 
@@ -21,10 +18,10 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpGet(Name = nameof(GetSubjects))]
-        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects()
+        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects(CancellationToken cancellationToken)
         {
             //get userid from token
-            //  var subjects = await _mediator.Send(new GetSubjects.Query());
+            //  var subjects = await _mediator.Send(new GetSubjects.t Query());
             return Ok(); //return Ok(subjects);
         }
 

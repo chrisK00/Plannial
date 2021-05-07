@@ -20,6 +20,11 @@ namespace Plannial.Core.Repositories
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task AddUserAsync(AppUser user)
         {
             await _context.AddAsync(user);

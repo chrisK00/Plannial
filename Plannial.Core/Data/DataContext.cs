@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Plannial.Core.Data.EntityTypeConfigs;
 using Plannial.Core.Entities;
-using Plannial.Core.EntityTypeConfigs;
 
 namespace Plannial.Core.Data
 {

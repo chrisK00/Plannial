@@ -12,7 +12,7 @@ using Plannial.Core.Responses;
 
 namespace Plannial.Core.Commands
 {
-   public static class AddSubject
+    public static class AddSubject
     {
         public record Command(string Name, string Description, string UserId) : IRequest<SubjectResponse>;
 
@@ -27,11 +27,11 @@ namespace Plannial.Core.Commands
                 _subjectRepository = subjectRepository;
             }
 
-            public async Task<SubjectResponse> Handle(Command request, CancellationToken cancellationToken)
+            async Task<SubjectResponse> IRequestHandler<Command, SubjectResponse>.Handle(Command request, CancellationToken cancellationToken)
             {
                 var subject = new Subject { UserId = request.UserId, Description = request.Description, Name = request.Name };
                 //add subjecttorepo
-
+                await _subjectRepository.AddSubjectAsync(subject);
                 return _mapper.Map<SubjectResponse>(subject);
             }
         }
