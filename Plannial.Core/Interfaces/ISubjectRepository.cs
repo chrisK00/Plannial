@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Plannial.Core.Entities;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Interfaces
 {

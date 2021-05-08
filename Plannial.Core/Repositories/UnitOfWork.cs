@@ -13,7 +13,7 @@ namespace Plannial.Core.Repositories
         {
             _context = context;
         }
-        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken) > 0;
         }

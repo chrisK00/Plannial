@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Commands
 {

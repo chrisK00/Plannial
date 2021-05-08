@@ -5,9 +5,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
 using Plannial.Core.Extensions;
+using Plannial.Core.Models.Requests;
+using Plannial.Core.Models.Responses;
 using Plannial.Core.Queries;
-using Plannial.Core.Requests;
-using Plannial.Core.Responses;
 
 namespace Plannial.Api.Controllers
 {
@@ -34,5 +34,15 @@ namespace Plannial.Api.Controllers
                 addSubjectRequest.Name, addSubjectRequest.Description, User.GetUserId()), cancellationToken);
             return CreatedAtRoute(nameof(GetSubjects), subject);
         }
+
+        [HttpPost("{subjectId}")]
+        public async Task<ActionResult<ExamResponse>> AddExam(AddExamRequest addExamRequest, int subjectId, CancellationToken cancellationToken)
+        {
+            var exam = await _mediator.Send(new AddExam.Command(
+                addExamRequest.Name, addExamRequest.Description, addExamRequest.DueDate, subjectId, User.GetUserId()), cancellationToken);
+
+            return CreatedAtRoute(nameof(GetSubjects), exam);
+        }
+
     }
 }

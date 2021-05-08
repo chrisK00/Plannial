@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
-using Plannial.Core.Requests;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Requests;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Api.Controllers
 {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
-using Plannial.Core.Entities;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Data
 {
@@ -54,7 +54,6 @@ namespace Plannial.Core.Data
                  .RuleFor(x => x.Name, x => x.Random.Word())
                  .RuleFor(x => x.Description, x => x.Lorem.Sentence())
                  .RuleFor(x => x.DueDate, x => x.Date.Future());
-
         }
 
         private static Faker<Homework> CreateHomeworkGenerator()

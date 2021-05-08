@@ -5,8 +5,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Services
 {

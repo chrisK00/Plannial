@@ -4,9 +4,9 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Commands
 {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Plannial.Core.Requests.Validators
+namespace Plannial.Core.Models.Requests.Validators
 {
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {

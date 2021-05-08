@@ -1,16 +1,15 @@
 ﻿using System;
-using Plannial.Core.Entities;
 using Plannial.Core.Helpers;
 
-namespace Plannial.Core.Responses
+namespace Plannial.Core.Models.Entities
 {
-    public class ReminderResponse
+    public class Reminder : BaseOwnedEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public Priority Priority { get; set; }
         public Category Category { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

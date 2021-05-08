@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Repositories
 {

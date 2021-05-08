@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Plannial.Core.Responses
+﻿namespace Plannial.Core.Models.Responses
 {
     public class UserResponse
     {

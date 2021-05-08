@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Plannial.Core.Entities
+namespace Plannial.Core.Models.Entities
 {
     public abstract class BaseOwnedEntity
     {

@@ -9,7 +9,7 @@ using Microsoft.OpenApi.Models;
 using Plannial.Api.Middlewares;
 using Plannial.Core.Data;
 using Plannial.Core.Extensions;
-using Plannial.Core.Requests.Validators;
+using Plannial.Core.Models.Requests.Validators;
 
 namespace Plannial.Api
 {

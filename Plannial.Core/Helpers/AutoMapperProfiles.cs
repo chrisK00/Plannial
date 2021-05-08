@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Plannial.Core.Entities;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Helpers
 {

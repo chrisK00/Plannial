@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Repositories
 {

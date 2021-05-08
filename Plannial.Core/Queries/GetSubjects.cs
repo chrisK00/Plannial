@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Queries
 {

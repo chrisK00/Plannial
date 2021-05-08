@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Repositories
 {
@@ -20,9 +16,8 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken)
+        public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default)
         {
-            var temp = cancellationToken.IsCancellationRequested;
             return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId);
         }
 

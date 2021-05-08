@@ -1,4 +1,4 @@
-﻿namespace Plannial.Core.Responses
+﻿namespace Plannial.Core.Models.Responses
 {
     public class HomeworkResponse
     {

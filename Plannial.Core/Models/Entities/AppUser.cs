@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Plannial.Core.Entities
+namespace Plannial.Core.Models.Entities
 {
     public class AppUser
     {

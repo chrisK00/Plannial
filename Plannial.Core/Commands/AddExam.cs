@@ -6,9 +6,9 @@ using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Responses;
+using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Commands
 {
@@ -34,8 +34,9 @@ namespace Plannial.Core.Commands
             public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 _logger.LogInformation($"Creating exam {request}");
-                var exam = new Exam { Name = request.Name, Description = request.Description, DueDate = request.DueDate };
+                var exam = new Exam { Name = request.Name, Description = request.Description, DueDate = request.DueDate, UserId = request.UserId };
                 var subject = await _subjectRepository.GetSubjectByIdAsync(request.subjectId, request.UserId, cancellationToken);
+
                 if (subject == null)
                 {
                     _logger.LogError($"Could not find subject: {request.subjectId}");
