@@ -10,5 +10,6 @@ namespace Plannial.Core.Entities
         public DateTime DueDate { get; set; }
         public Priority Priority { get; set; }
         public Category Category { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

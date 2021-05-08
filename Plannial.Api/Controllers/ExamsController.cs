@@ -27,5 +27,12 @@ namespace Plannial.Api.Controllers
 
             return Created($"subjects/{subjectId}", exam);
         }
+
+        [HttpDelete("{examId}")]
+        public async Task<IActionResult> RemoveExam(int examId)
+        {
+            await _mediator.Send(new RemoveExam.Command(examId, User.GetUserId()));
+            return NoContent();
+        }
     }
 }

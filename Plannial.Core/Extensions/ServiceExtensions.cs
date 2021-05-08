@@ -19,6 +19,7 @@ namespace Plannial.Core.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddMediatR(typeof(GetSubjects).Assembly);
             services.AddScoped<ISubjectRepository, SubjectRepository>();
+            services.AddScoped<IExamRepository, ExamRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
