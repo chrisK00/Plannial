@@ -46,7 +46,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken)
         {
-            return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams)
+            return await _context.Subjects
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);
         }
     }
