@@ -23,14 +23,11 @@ namespace Plannial.Core.Data
             //when adding a id will be generated
             await context.AddRangeAsync(users);
 
-            var examGenerator = CreateExamGenerator();
-            var homeworkGenerator = CreateHomeworkGenerator();
-
             var subjects = new Faker<Subject>()
                 .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
                 .RuleFor(x => x.Name, x => x.Random.Word())
-                .RuleFor(x => x.Exams, examGenerator.Generate(2))
-                .RuleFor(x => x.Homeworks, homeworkGenerator.Generate(2))
+                .RuleFor(x => x.Exams,  CreateExamGenerator().Generate(3))
+                .RuleFor(x => x.Homeworks, CreateHomeworkGenerator().Generate(3))
                 .RuleFor(x => x.Description, x => x.Lorem.Sentence())
                 .Generate(3).ToList();
 
