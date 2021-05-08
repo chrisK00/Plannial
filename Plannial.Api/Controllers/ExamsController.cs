@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Plannial.Core.Commands;
+using Plannial.Core.Extensions;
 using Plannial.Core.Requests;
 using Plannial.Core.Responses;
 
@@ -20,9 +22,9 @@ namespace Plannial.Api.Controllers
         [HttpPost("{subjectId}")]
         public async Task<ActionResult<ExamResponse>> AddExam(AddExamRequest addExamRequest, int subjectId, CancellationToken cancellationToken)
         {
-            var exam = new ExamResponse { Id = 5 };
-        //    var exam = await _mediator.Send(new AddExam.Command(
-          //      addExamRequest.Name, addExamRequest.Description, addExamRequest.DueDate,subjectId), cancellationToken);
+            var exam = await _mediator.Send(new AddExam.Command(
+                addExamRequest.Name, addExamRequest.Description, addExamRequest.DueDate, subjectId, User.GetUserId()), cancellationToken);
+
             return Created($"subjects/{subjectId}", exam);
         }
     }
