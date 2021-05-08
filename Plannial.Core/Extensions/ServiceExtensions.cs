@@ -17,7 +17,6 @@ namespace Plannial.Core.Extensions
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IOwnedEntityAuthService, OwnedEntityAuthService>();
             services.AddMediatR(typeof(GetSubjects).Assembly);
             services.AddScoped<ISubjectRepository, SubjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

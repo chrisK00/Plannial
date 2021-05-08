@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Plannial.Core.Entities;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Responses;
 
@@ -10,20 +14,43 @@ namespace Plannial.Core.Commands
 {
     public static class AddExam
     {
-        public record Command(string Name, string Description, DateTime DueDate, int subjectId):IRequest<ExamResponse>;
+        public record Command(string Name, string Description, DateTime DueDate, int subjectId, string UserId) : IRequest<ExamResponse>;
 
-      /*  public class Handler : IRequestHandler<ExamResponse>
+        public class Handler : IRequestHandler<Command, ExamResponse>
         {
+            private readonly IMapper _mapper;
             private readonly IUnitOfWork _unitOfWork;
+            private readonly ISubjectRepository _subjectRepository;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(IMapper mapper, IUnitOfWork unitOfWork)
+            public Handler(IMapper mapper, IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger)
             {
+                _mapper = mapper;
                 _unitOfWork = unitOfWork;
+                _subjectRepository = subjectRepository;
+                _logger = logger;
             }
-            public Task<Unit> Handle(ExamResponse request, CancellationToken cancellationToken)
+
+            public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                throw new NotImplementedException();
+                _logger.LogInformation($"Creating exam {request}");
+                var exam = new Exam { Name = request.Name, Description = request.Description, DueDate = request.DueDate };
+                var subject = await _subjectRepository.GetSubjectByIdAsync(request.subjectId, request.UserId, cancellationToken);
+                if (subject == null)
+                {
+                    _logger.LogError($"Could not find subject: {request.subjectId}");
+                    throw new KeyNotFoundException("Subject does not exist");
+                }
+
+                subject.Exams.Add(exam);
+
+                if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
+                {
+                    _logger.LogError("Failed to add exam");
+                    throw new DbUpdateException("Failed to add exam");
+                }
+                return _mapper.Map<ExamResponse>(exam);
             }
-        }*/
+        }
     }
 }

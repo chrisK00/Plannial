@@ -43,5 +43,11 @@ namespace Plannial.Core.Repositories
                     }).ToList()
                 }).ToListAsync(cancellationToken);
         }
+
+        public async Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken)
+        {
+            return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams)
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);
+        }
     }
 }

@@ -8,11 +8,6 @@ namespace Plannial.Core.Data.EntityTypeConfigs
     {
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
-            builder.HasOne<AppUser>()
-                 .WithMany()
-                 .HasForeignKey(x => x.UserId)
-                 .IsRequired()
-                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(255)
