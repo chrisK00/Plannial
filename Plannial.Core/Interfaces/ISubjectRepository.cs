@@ -8,6 +8,12 @@ namespace Plannial.Core.Interfaces
 {
     public interface ISubjectRepository
     {
+        /// <summary>
+        /// Get subjects including their related entities as response models without tracking
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Subjects as response models including related entities without tracking</returns>
         Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken);
         Task AddSubjectAsync(Subject subject, CancellationToken cancellationToken);
 

@@ -41,7 +41,7 @@ namespace Plannial.Core.Repositories
                     {
                         Id = h.Id
                     }).ToList()
-                }).ToListAsync(cancellationToken);
+                }).AsNoTracking().ToListAsync(cancellationToken);
         }
 
         public async Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken)
