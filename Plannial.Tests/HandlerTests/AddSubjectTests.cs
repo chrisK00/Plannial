@@ -13,27 +13,33 @@ using Xunit;
 
 namespace Plannial.Tests.HandlerTests
 {
-    public class CommandsTests
+    public class AddSubjectTests
     {
         private readonly Mock<ISubjectRepository> _subjectRepository = new Mock<ISubjectRepository>();
         private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
         private readonly Mock<ILogger<AddSubject.Handler>> _addSubjectLogger = new Mock<ILogger<AddSubject.Handler>>();
         private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfiles>()));
 
-        public CommandsTests()
+        //This is our subject we want to test
+        private readonly AddSubject.Handler _subject;
+
+        public AddSubjectTests()
         {
             _unitOfWork.Setup(_ => _.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _subject = new AddSubject.Handler(_mapper, _subjectRepository.Object, _unitOfWork.Object, _addSubjectLogger.Object);
         }
 
         [Fact]
-        public async Task AddSubject_Sends_Back_Newly_Created_Subject()
+        public async Task AddSubject_ReturnsNewlyCreatedSubject()
         {
-
-            var handler = new AddSubject.Handler(_mapper, _subjectRepository.Object, _unitOfWork.Object, _addSubjectLogger.Object);
-
+            //arrange
             var command = new AddSubject.Command("Math", "Not so fun", Guid.NewGuid().ToString());
 
-            var newSubject = await handler.Handle(command, default);
+            //act
+            var newSubject = await _subject.Handle(command, default);
+
+            //assert
+            _unitOfWork.Verify(_ => _.SaveChangesAsync(default), Times.Once);
 
             newSubject.Should().NotBeNull();
             newSubject.Name.Should().BeEquivalentTo(command.Name);
