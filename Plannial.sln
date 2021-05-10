@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plannial.Api", "Plannial.Api\Plannial.Api.csproj", "{528B9C49-F289-44A4-95E5-90AF4F046B06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plannial.Api", "Plannial.Api\Plannial.Api.csproj", "{528B9C49-F289-44A4-95E5-90AF4F046B06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plannial.Core", "Plannial.Core\Plannial.Core.csproj", "{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plannial.Core", "Plannial.Core\Plannial.Core.csproj", "{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plannial.Tests", "Plannial.Tests\Plannial.Tests.csproj", "{EE28BA2D-2FB0-4151-9735-624C58D26830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C956BED7-BD0A-418C-AD2A-52CABDE6BB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE28BA2D-2FB0-4151-9735-624C58D26830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE28BA2D-2FB0-4151-9735-624C58D26830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE28BA2D-2FB0-4151-9735-624C58D26830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE28BA2D-2FB0-4151-9735-624C58D26830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,7 +22,7 @@ namespace Plannial.Core.Commands
                 _tokenService = tokenService;
             }
 
-            async Task<UserResponse> IRequestHandler<Command, UserResponse>.Handle(Command request, CancellationToken cancellationToken)
+            public async Task<UserResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetUserByEmailAsync(request.Email);
                 if (user == null)

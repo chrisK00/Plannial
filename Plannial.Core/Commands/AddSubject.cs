@@ -14,7 +14,7 @@ namespace Plannial.Core.Commands
     {
         public record Command(string Name, string Description, string UserId) : IRequest<SubjectResponse>;
 
-        class Handler : IRequestHandler<Command, SubjectResponse>
+        public class Handler : IRequestHandler<Command, SubjectResponse>
         {
             private readonly IMapper _mapper;
             private readonly ISubjectRepository _subjectRepository;
@@ -29,7 +29,7 @@ namespace Plannial.Core.Commands
                 _logger = logger;
             }
 
-            async Task<SubjectResponse> IRequestHandler<Command, SubjectResponse>.Handle(Command request, CancellationToken cancellationToken)
+            public async Task<SubjectResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 _logger.LogInformation($"Creating new subject: {request}");
 
