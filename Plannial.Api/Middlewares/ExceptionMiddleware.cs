@@ -37,12 +37,12 @@ namespace Plannial.Api.Middlewares
 
                 context.Response.StatusCode = ex switch
                 {
-                    KeyNotFoundException => (int)HttpStatusCode.NotFound,
-                    InvalidOperationException => (int)HttpStatusCode.BadRequest,
-                    DbUpdateException => (int)HttpStatusCode.BadRequest,
-                    OperationCanceledException => (int)HttpStatusCode.BadGateway,
-                    UnauthorizedAccessException => (int)HttpStatusCode.Forbidden,
-                    _ => (int)HttpStatusCode.InternalServerError
+                    KeyNotFoundException => StatusCodes.Status404NotFound,
+                    InvalidOperationException => StatusCodes.Status400BadRequest,
+                    DbUpdateException => StatusCodes.Status400BadRequest,
+                    OperationCanceledException => StatusCodes.Status502BadGateway,
+                    UnauthorizedAccessException => StatusCodes.Status403Forbidden,
+                    _ => StatusCodes.Status500InternalServerError
                 };
 
                 var result = _env.IsDevelopment() ?
