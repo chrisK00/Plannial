@@ -9,6 +9,7 @@
 - Authentication and Authorization with JWT tokens and Identity framework
 - Entity framework and SQL server
 - Swagger documentation
+- logging
 
 ## How to use
 - Set a "TokenKey:" in appsettings.json
