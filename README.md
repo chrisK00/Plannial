@@ -8,6 +8,7 @@
 - Unit tests with xUnit, fluentassertions, Moq
 - Authentication and Authorization with JWT tokens and Identity framework
 - Entity framework and SQL server
+- Swagger documentation
 
 ## How to use
 - Set a "TokenKey:" in appsettings.json
