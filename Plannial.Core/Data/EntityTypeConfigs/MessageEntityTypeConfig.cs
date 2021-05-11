@@ -14,12 +14,12 @@ namespace Plannial.Core.Data.EntityTypeConfigs
             builder.HasOne<AppUser>()
                 .WithMany(x => x.MessagesRecieved)
                 .HasForeignKey(x => x.RecipientId)
-                .IsRequired();
+                .IsRequired().OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne<AppUser>()
                 .WithMany(x => x.MessagesSent)
                 .HasForeignKey(x => x.SenderId)
-                .IsRequired();
+                .IsRequired().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

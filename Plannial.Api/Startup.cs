@@ -30,7 +30,7 @@ namespace Plannial.Api
             services.ConfigureServices();
             services.ConfigureIdentityServices(Configuration);
            
-            services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source = Plannial.db"));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllers()
                 .AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<AddSubjectRequestValidator>());
 

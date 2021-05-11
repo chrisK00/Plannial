@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
 using Plannial.Core.Interfaces;
@@ -15,7 +16,7 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<AppUser> GetUserAsync(string id)
+        public async Task<AppUser> GetUserAsync(Guid id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }

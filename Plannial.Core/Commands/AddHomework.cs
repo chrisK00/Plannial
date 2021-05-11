@@ -14,7 +14,7 @@ namespace Plannial.Core.Commands
 {
     public static class AddHomework
     {
-        public record Command(string Name, string Description, DateTime DueDate, int subjectId, string UserId) : IRequest<HomeworkResponse>;
+        public record Command(string Name, string Description, DateTime DueDate, int subjectId, Guid UserId) : IRequest<HomeworkResponse>;
 
         public class Handler : IRequestHandler<Command, HomeworkResponse>
         {

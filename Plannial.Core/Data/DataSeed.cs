@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
@@ -18,18 +19,22 @@ namespace Plannial.Core.Data
             var users = new Faker<AppUser>()
                  .RuleFor(x => x.Email, x => x.Person.Email)
                  .RuleFor(x => x.Password, "Password123.")
-                 .Generate(2).ToList();
+                 .Generate(3).ToList();
 
-            users.Add(new AppUser { Email = "christian@gmail.com", Password = "Password123" });
+            users.Add(new AppUser
+            {
+                Id = Guid.NewGuid(),
+                Email = "christian@gmail.com",
+                Password = "Password123"
+            });
 
-            //when adding a id will be generated
-            await context.AddRangeAsync(users);
+            await context.Users.AddRangeAsync(users);
 
             var subjects = new Faker<Subject>()
                 .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
-                .RuleFor(x => x.Name, x => x.Random.Word())
+                .RuleFor(x => x.Name, x => x.Name.JobTitle())
                 .RuleFor(x => x.Description, x => x.Lorem.Sentence())
-                .Generate(4).ToList();
+                .Generate(5).ToList();
 
             foreach (var item in subjects)
             {
@@ -44,14 +49,14 @@ namespace Plannial.Core.Data
 
             //! TODO fake reminders
 
-            await context.AddRangeAsync(subjects);
+            await context.Subjects.AddRangeAsync(subjects);
             await context.SaveChangesAsync();
         }
 
         private static Faker<Exam> CreateExamGenerator()
         {
             return new Faker<Exam>()
-                 .RuleFor(x => x.Name, x => x.Random.Word())
+                 .RuleFor(x => x.Name, x => x.Name.JobTitle())
                  .RuleFor(x => x.Description, x => x.Lorem.Sentence())
                  .RuleFor(x => x.DueDate, x => x.Date.Future());
         }
@@ -59,7 +64,7 @@ namespace Plannial.Core.Data
         private static Faker<Homework> CreateHomeworkGenerator()
         {
             return new Faker<Homework>()
-                .RuleFor(x => x.Name, x => x.Random.Word())
+                .RuleFor(x => x.Name, x => x.Name.JobTitle())
                 .RuleFor(x => x.Description, x => x.Lorem.Sentence())
                 .RuleFor(x => x.DueDate, x => x.Date.Future());
         }

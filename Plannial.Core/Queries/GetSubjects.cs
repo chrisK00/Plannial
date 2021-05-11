@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,7 +12,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetSubjects
     {
-        public record Query(string UserId) : IRequest<IEnumerable<SubjectResponse>>;
+        public record Query(Guid UserId) : IRequest<IEnumerable<SubjectResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<SubjectResponse>>
         {

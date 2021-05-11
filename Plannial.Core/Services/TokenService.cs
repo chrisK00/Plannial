@@ -25,7 +25,7 @@ namespace Plannial.Core.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
 
             //validation credentials, algorithm to use for securing the creds

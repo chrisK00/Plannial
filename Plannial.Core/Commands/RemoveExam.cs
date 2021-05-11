@@ -11,7 +11,7 @@ namespace Plannial.Core.Commands
 {
     public static class RemoveExam
     {
-        public record Command(int ExamId, string UserId) : IRequest;
+        public record Command(int ExamId, Guid UserId) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {

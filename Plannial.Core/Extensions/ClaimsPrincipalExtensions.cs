@@ -1,12 +1,13 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 
 namespace Plannial.Core.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
+        public static Guid GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
-            return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return Guid.Parse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
 
     }

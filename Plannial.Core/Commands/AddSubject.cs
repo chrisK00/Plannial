@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -12,7 +13,7 @@ namespace Plannial.Core.Commands
 {
     public static class AddSubject
     {
-        public record Command(string Name, string Description, string UserId) : IRequest<SubjectResponse>;
+        public record Command(string Name, string Description, Guid UserId) : IRequest<SubjectResponse>;
 
         public class Handler : IRequestHandler<Command, SubjectResponse>
         {

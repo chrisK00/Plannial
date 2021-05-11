@@ -21,9 +21,6 @@ namespace Plannial.Core.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<AppUser>().Property(x => x.Id)
-                .ValueGeneratedOnAdd();
-
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
             new CategoryEntityTypeConfig().Configure(builder.Entity<Category>());
             new ExamEntityTypeConfig().Configure(builder.Entity<Exam>());
