@@ -45,8 +45,8 @@ namespace Plannial.Core.Commands
 
                 if (subject == null)
                 {
-                    _logger.LogWarning($"Could not find subject: {request.subjectId}");
-                    throw new KeyNotFoundException("Subject does not exist");
+                    _logger.LogWarning($"User tried to access subject: {request.subjectId}");
+                    throw new UnauthorizedAccessException("You dont own this item");
                 }
 
                 _logger.LogInformation($"Adding exam {request} to subject: {subject.Id}");

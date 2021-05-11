@@ -33,8 +33,8 @@ namespace Plannial.Core.Commands
 
                 if (exam == null)
                 {
-                    _logger.LogWarning($"Could not find exam with the incoming request: {request}");
-                    throw new KeyNotFoundException("Could not find exam");
+                    _logger.LogWarning($"User tried to access exam: {request.ExamId}");
+                    throw new UnauthorizedAccessException("You dont own this item");
                 }
 
                 _logger.LogInformation($"Removing exam {request}");

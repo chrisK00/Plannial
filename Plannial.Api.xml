@@ -4,6 +4,27 @@
         <name>Plannial.Api</name>
     </assembly>
     <members>
+        <member name="M:Plannial.Api.Controllers.ExamsController.UpdateExam(System.Int32,Plannial.Core.Models.Requests.UpdateExamRequest,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new exam to an existing subject
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT /Exam
+                {
+                    "name":"Math test",
+                    "description":"not so fun",
+                    "dueDate":"2020-02-30"
+                }
+            </remarks>
+            <param name="id"></param>
+            <param name="updateExamRequest"></param>
+            <param name="cancellationToken"></param>
+            <returns>A newly created exam</returns>
+            <response code="200">Returns the newly created item</response>
+            <response code="403">If the user is not the owner of the item </response>
+        </member>
         <member name="M:Plannial.Api.Controllers.SubjectsController.AddSubject(Plannial.Core.Models.Requests.AddSubjectRequest,System.Threading.CancellationToken)">
             <summary>
             Adds a new subject

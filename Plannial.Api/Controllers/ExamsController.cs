@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
 using Plannial.Core.Extensions;
@@ -26,6 +27,28 @@ namespace Plannial.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Adds a new exam to an existing subject
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT /Exam
+        ///     {
+        ///         "name":"Math test",
+        ///         "description":"not so fun",
+        ///         "dueDate":"2020-02-30"
+        ///     }
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="updateExamRequest"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A newly created exam</returns>
+        /// <response code="200">Returns the newly created item</response>
+        /// <response code="403">If the user is not the owner of the item </response>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [HttpPut("{id}")]
         public async Task<ActionResult<ExamResponse>> UpdateExam(int id, UpdateExamRequest updateExamRequest, CancellationToken cancellationToken)
         {
