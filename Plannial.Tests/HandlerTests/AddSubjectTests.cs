@@ -8,7 +8,6 @@ using Moq;
 using Plannial.Core.Commands;
 using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Models.Entities;
 using Xunit;
 
 namespace Plannial.Tests.HandlerTests
