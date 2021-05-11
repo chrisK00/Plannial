@@ -14,7 +14,7 @@ namespace Plannial.Core.Commands
 {
     public static class AddHomework
     {
-        public record Command(string Name, string Description, DateTime DueDate, int subjectId, string UserId) : IRequest<HomeworkResponse>;
+        public record Command(string Name, string Description, DateTime DueDate, int SubjectId, string UserId) : IRequest<HomeworkResponse>;
 
         public class Handler : IRequestHandler<Command, HomeworkResponse>
         {
@@ -41,11 +41,11 @@ namespace Plannial.Core.Commands
                     UserId = request.UserId
                 };
 
-                var subject = await _subjectRepository.GetSubjectByIdAsync(request.subjectId, request.UserId, cancellationToken);
+                var subject = await _subjectRepository.GetSubjectByIdAsync(request.SubjectId, request.UserId, cancellationToken);
 
                 if (subject == null)
                 {
-                    _logger.LogWarning($"User tried to access subject; {request.subjectId}");
+                    _logger.LogWarning($"User tried to access subject; {request.SubjectId}");
                     throw new UnauthorizedAccessException("You dont own this item");
                 }
 

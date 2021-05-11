@@ -15,9 +15,9 @@ namespace Plannial.Tests.HandlerTests
 {
     public class AddSubjectTests
     {
-        private readonly Mock<ISubjectRepository> _subjectRepository = new Mock<ISubjectRepository>();
-        private readonly Mock<IUnitOfWork> _unitOfWork = new Mock<IUnitOfWork>();
-        private readonly Mock<ILogger<AddSubject.Handler>> _addSubjectLogger = new Mock<ILogger<AddSubject.Handler>>();
+        private readonly Mock<ISubjectRepository> _subjectRepository = new();
+        private readonly Mock<IUnitOfWork> _unitOfWork = new();
+        private readonly Mock<ILogger<AddSubject.Handler>> _addSubjectLogger = new();
         private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfiles>()));
 
         //This is our subject we want to test

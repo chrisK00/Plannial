@@ -18,6 +18,14 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        {
+            await _mediator.Send(new Register.Command(registerRequest.Email, registerRequest.Password));
+            return NoContent();
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<UserResponse>> LoginAsync(LoginRequest loginRequest)
         {

@@ -29,7 +29,7 @@ namespace Plannial.Core.Commands
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
           
-                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId);
+                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
 
                 if (exam == null)
                 {

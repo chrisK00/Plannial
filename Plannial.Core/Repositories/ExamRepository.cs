@@ -19,7 +19,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken)
         {
-            return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId);
+            return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId, cancellationToken);
         }
 
         public void RemoveExam(Exam exam)
