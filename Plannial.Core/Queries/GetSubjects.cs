@@ -12,14 +12,14 @@ namespace Plannial.Core.Queries
 {
     public static class GetSubjects
     {
-        public record Query(Guid UserId) : IRequest<IEnumerable<SubjectResponse>>;
+        public record Query(string UserId) : IRequest<IEnumerable<SubjectResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<SubjectResponse>>
         {
             private readonly ISubjectRepository _subjectRepository;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(ISubjectRepository subjectRepository, ILogger<Handler> logger, IMapper mapper)
+            public Handler(ISubjectRepository subjectRepository, ILogger<Handler> logger)
             {
                 _subjectRepository = subjectRepository;
                 _logger = logger;

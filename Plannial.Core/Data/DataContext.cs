@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data.EntityTypeConfigs;
 using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
-        public DbSet<AppUser> Users { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Category> Categories { get; set; }

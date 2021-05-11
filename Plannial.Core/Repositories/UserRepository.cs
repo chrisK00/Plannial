@@ -16,7 +16,7 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<AppUser> GetUserAsync(Guid id)
+        public async Task<AppUser> GetUserAsync(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }

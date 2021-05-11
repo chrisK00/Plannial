@@ -15,7 +15,7 @@ namespace Plannial.Core.Interfaces
         /// <param name="userId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Subjects as response models including related entities without tracking</returns>
-        Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(Guid userId, CancellationToken cancellationToken);
+        Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken);
         Task AddSubjectAsync(Subject subject, CancellationToken cancellationToken);
 
         /// <summary>
@@ -24,6 +24,6 @@ namespace Plannial.Core.Interfaces
         /// <param name="id"></param>
         /// <param name="userId"></param>
         /// <returns>A subject including all related entities</returns>
-        Task<Subject> GetSubjectByIdAsync(int id, Guid userId, CancellationToken cancellationToken);
+        Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken);
     }
 }

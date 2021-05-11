@@ -25,7 +25,7 @@ namespace Plannial.Core.Repositories
             await _context.AddAsync(subject, cancellationToken);
         }
 
-        public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(Guid userId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken)
         {
             return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams)
                 .Where(x => x.UserId == userId)
@@ -45,7 +45,7 @@ namespace Plannial.Core.Repositories
                 }).AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<Subject> GetSubjectByIdAsync(int id, Guid userId, CancellationToken cancellationToken)
+        public async Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken)
         {
             return await _context.Subjects
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);

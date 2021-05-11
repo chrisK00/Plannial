@@ -33,7 +33,7 @@ namespace Plannial.Tests.HandlerTests
         public async Task AddSubject_ReturnsNewlyCreatedSubject()
         {
             //arrange
-            var command = new AddSubject.Command("Math", "Not so fun", Guid.NewGuid());
+            var command = new AddSubject.Command("Math", "Not so fun", Guid.NewGuid().ToString());
 
             //act
             var newSubject = await _subject.Handle(command, default);

@@ -15,7 +15,7 @@ namespace Plannial.Core.Commands
 {
     public static class UpdateExam
     {
-        public record Command(int ExamId, string Name, string Description, DateTime DueDate,Guid UserId) : IRequest<ExamResponse>;
+        public record Command(int ExamId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<ExamResponse>;
 
         public class Handler : IRequestHandler<Command, ExamResponse>
         {

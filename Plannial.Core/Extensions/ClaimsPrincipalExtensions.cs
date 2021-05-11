@@ -5,9 +5,9 @@ namespace Plannial.Core.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static Guid GetUserId(this ClaimsPrincipal claimsPrincipal)
+        public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
-            return Guid.Parse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
     }

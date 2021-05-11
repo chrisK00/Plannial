@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Data;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Api
 {
@@ -16,10 +18,12 @@ namespace Plannial.Api
 
             using var scope = host.Services.CreateScope();
             try
-            { 
+            {
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-                context.Database.EnsureCreated();
-                await DataSeed.SeedAsync(context);
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                await context.Database.EnsureCreatedAsync();
+                await DataSeed.SeedAsync(userManager, context);
             }
             catch (Exception ex)
             {

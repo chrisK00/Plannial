@@ -3,6 +3,7 @@ using System.IO;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Plannial.Api.Middlewares;
 using Plannial.Core.Data;
 using Plannial.Core.Extensions;
+using Plannial.Core.Models.Entities;
 using Plannial.Core.Models.Requests.Validators;
 
 namespace Plannial.Api
@@ -29,8 +31,9 @@ namespace Plannial.Api
         {
             services.ConfigureServices();
             services.ConfigureIdentityServices(Configuration);
-           
+
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+
             services.AddControllers()
                 .AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<AddSubjectRequestValidator>());
 

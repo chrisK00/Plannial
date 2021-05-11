@@ -7,7 +7,7 @@ namespace Plannial.Core.Interfaces
     public interface IUserRepository
     {
         Task AddUserAsync(AppUser user);
-        Task<AppUser> GetUserAsync(Guid id);
+        Task<AppUser> GetUserAsync(string id);
         Task<AppUser> GetUserByEmailAsync(string email);
     }
 }

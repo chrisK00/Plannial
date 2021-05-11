@@ -1,11 +1,14 @@
 ﻿using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Plannial.Core.Data;
 using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 using Plannial.Core.Queries;
 using Plannial.Core.Repositories;
 using Plannial.Core.Services;
@@ -29,6 +32,14 @@ namespace Plannial.Core.Extensions
 
         public static IServiceCollection ConfigureIdentityServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddIdentity<AppUser, IdentityRole>(
+             options =>
+             {
+                 options.User.RequireUniqueEmail = true;
+                 options.Password.RequireNonAlphanumeric = false;
+             }
+             ).AddEntityFrameworkStores<DataContext>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(opt =>
                  {

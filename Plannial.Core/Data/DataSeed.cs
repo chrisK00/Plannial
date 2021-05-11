@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Models.Entities;
 
@@ -9,32 +10,30 @@ namespace Plannial.Core.Data
 {
     public static class DataSeed
     {
-        public static async Task SeedAsync(DataContext context)
+        public static async Task SeedAsync(UserManager<AppUser> userManager, DataContext context)
         {
-            if (await context.Users.AnyAsync())
+            if (await userManager.Users.AnyAsync())
             {
                 return;
             }
 
             var users = new Faker<AppUser>()
                  .RuleFor(x => x.Email, x => x.Person.Email)
-                 .RuleFor(x => x.Password, "Password123.")
                  .Generate(3).ToList();
 
-            users.Add(new AppUser
-            {
-                Id = Guid.NewGuid(),
-                Email = "christian@gmail.com",
-                Password = "Password123"
-            });
+            users.Add(new AppUser { Email = "christian@gmail.com" });
 
-            await context.Users.AddRangeAsync(users);
+            foreach (var user in users)
+            {
+                user.UserName = user.Email;
+                await userManager.CreateAsync(user, "Password123");
+            }
 
             var subjects = new Faker<Subject>()
-                .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
-                .RuleFor(x => x.Name, x => x.Name.JobTitle())
-                .RuleFor(x => x.Description, x => x.Lorem.Sentence())
-                .Generate(5).ToList();
+                 .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
+                 .RuleFor(x => x.Name, x => x.Name.JobTitle())
+                 .RuleFor(x => x.Description, x => x.Lorem.Sentence())
+                 .Generate(5).ToList();
 
             foreach (var item in subjects)
             {
