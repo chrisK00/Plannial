@@ -33,16 +33,23 @@ namespace Plannial.Core.Commands
 
             public async Task<HomeworkResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation($"Creating homework {request}");
-                var homework = new Homework { Name = request.Name, Description = request.Description, DueDate = request.DueDate, UserId = request.UserId };
+                var homework = new Homework
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    DueDate = request.DueDate,
+                    UserId = request.UserId
+                };
+
                 var subject = await _subjectRepository.GetSubjectByIdAsync(request.subjectId, request.UserId, cancellationToken);
 
                 if (subject == null)
                 {
-                    _logger.LogError($"Could not find subject: {request.subjectId}");
+                    _logger.LogWarning($"Could not find subject: {request.subjectId}");
                     throw new KeyNotFoundException("Subject does not exist");
                 }
 
+                _logger.LogInformation($"Adding homework {request} to subject: {subject.Id}");
                 subject.Homeworks.Add(homework);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))

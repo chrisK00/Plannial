@@ -28,14 +28,16 @@ namespace Plannial.Core.Commands
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation($"Removing exam: {request.ExamId}");
+          
                 var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId);
 
                 if (exam == null)
                 {
-                    _logger.LogError($"Could not find exam with the incoming request: {request}");
+                    _logger.LogWarning($"Could not find exam with the incoming request: {request}");
                     throw new KeyNotFoundException("Could not find exam");
                 }
+
+                _logger.LogInformation($"Removing exam {request}");
                 _examRepository.RemoveExam(exam);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))

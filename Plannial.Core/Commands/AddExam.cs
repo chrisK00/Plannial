@@ -33,16 +33,23 @@ namespace Plannial.Core.Commands
 
             public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation($"Creating exam {request}");
-                var exam = new Exam { Name = request.Name, Description = request.Description, DueDate = request.DueDate, UserId = request.UserId };
+                var exam = new Exam
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    DueDate = request.DueDate,
+                    UserId = request.UserId
+                };
+
                 var subject = await _subjectRepository.GetSubjectByIdAsync(request.subjectId, request.UserId, cancellationToken);
 
                 if (subject == null)
                 {
-                    _logger.LogError($"Could not find subject: {request.subjectId}");
+                    _logger.LogWarning($"Could not find subject: {request.subjectId}");
                     throw new KeyNotFoundException("Subject does not exist");
                 }
 
+                _logger.LogInformation($"Adding exam {request} to subject: {subject.Id}");
                 subject.Exams.Add(exam);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))

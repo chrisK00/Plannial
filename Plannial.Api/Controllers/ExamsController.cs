@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
 using Plannial.Core.Extensions;
+using Plannial.Core.Models.Requests;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Api.Controllers
 {
@@ -16,11 +19,20 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpDelete("{examId}")]
-        public async Task<IActionResult> RemoveExam(int examId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveExam(int id)
         {
-            await _mediator.Send(new RemoveExam.Command(examId, User.GetUserId()));
+            await _mediator.Send(new RemoveExam.Command(id, User.GetUserId()));
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ExamResponse>> UpdateExam(int id, UpdateExamRequest updateExamRequest, CancellationToken cancellationToken)
+        {
+            var exam = await _mediator.Send(new UpdateExam.Command(
+                   id, updateExamRequest.Name, updateExamRequest.Description, updateExamRequest.DueDate, User.GetUserId()), cancellationToken);
+
+            return exam;
         }
     }
 }

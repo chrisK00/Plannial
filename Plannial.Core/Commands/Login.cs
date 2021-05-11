@@ -31,7 +31,12 @@ namespace Plannial.Core.Commands
                 }
 
                 var token = _tokenService.CreateToken(user);
-                return new UserResponse { Id = user.Id, Email = user.Email, Token = token };
+                return new UserResponse
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Token = token
+                };
             }
         }
     }

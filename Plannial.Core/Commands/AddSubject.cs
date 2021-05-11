@@ -33,7 +33,13 @@ namespace Plannial.Core.Commands
             {
                 _logger.LogInformation($"Creating new subject: {request}");
 
-                var subject = new Subject { UserId = request.UserId, Description = request.Description, Name = request.Name };
+                var subject = new Subject
+                {
+                    UserId = request.UserId,
+                    Description = request.Description,
+                    Name = request.Name
+                };
+
                 await _subjectRepository.AddSubjectAsync(subject, cancellationToken);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
