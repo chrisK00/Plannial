@@ -18,7 +18,6 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
-
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {

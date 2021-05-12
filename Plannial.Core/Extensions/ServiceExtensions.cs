@@ -41,19 +41,23 @@ namespace Plannial.Core.Extensions
              }
              ).AddEntityFrameworkStores<DataContext>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                 .AddJwtBearer(opt =>
-                 {
-                     opt.TokenValidationParameters = new TokenValidationParameters
-                     {
-                         //validate the created token is correct
-                         ValidateIssuerSigningKey = true,
-                         //our key to validate against the incoming
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
-                         ValidateAudience = false,
-                         ValidateIssuer = false
-                     };
-                 });
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    //validate the created token is correct
+                    ValidateIssuerSigningKey = true,
+                    //our key to validate against the incoming
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+            });
 
             return services;
         }
