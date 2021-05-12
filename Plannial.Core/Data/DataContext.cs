@@ -12,6 +12,7 @@ namespace Plannial.Core.Data
         }
 
         public DbSet<Homework> Homeworks { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Reminder> Reminders { get; set; }

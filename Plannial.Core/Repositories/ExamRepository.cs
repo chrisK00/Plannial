@@ -17,7 +17,7 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken)
+        public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default)
         {
             return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId, cancellationToken);
         }
