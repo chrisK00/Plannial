@@ -26,6 +26,7 @@ namespace Plannial.Core.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddScoped<IMessageRepository, MessageRepository>();
             //register all app services here
             return services;
         }

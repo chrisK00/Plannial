@@ -7,5 +7,5 @@ namespace Plannial.Core.Models.Requests
     public record AddHomeworkRequest(string Name, string Description, DateTime DueDate);
     public record AddReminderRequest(string Name, string Description, DateTime? DueDate, Priority Priority);
     public record AddSubjectRequest(string Name, string Description);
-
+    public record AddMessageRequest(string RecipientId, string Content);
 }

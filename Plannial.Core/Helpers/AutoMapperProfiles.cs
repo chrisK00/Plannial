@@ -13,6 +13,7 @@ namespace Plannial.Core.Helpers
             CreateMap<Reminder, ReminderResponse>();
             CreateMap<Exam, ExamResponse>();
             CreateMap<Homework, HomeworkResponse>();
+            CreateMap<Message, MessageResponse>();
         }
     }
 }
