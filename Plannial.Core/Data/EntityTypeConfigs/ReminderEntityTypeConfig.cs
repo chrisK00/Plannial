@@ -25,7 +25,7 @@ namespace Plannial.Core.Data.EntityTypeConfigs
             builder.HasOne(x => x.Category)
                 .WithMany();
 
-            builder.HasQueryFilter(x => x.IsDeleted);
+            builder.HasQueryFilter(x => x.DeletedDate == null);
         }
     }
 }
