@@ -11,8 +11,4 @@
 - Swagger documentation
 - logging
 
-## How to use
-- Set a "TokenKey:" in appsettings.json
-- You also need a connection string to SQL server
-
 
