@@ -26,15 +26,15 @@ namespace Plannial.Core.Repositories
             await _context.Messages.AddAsync(message, cancellationToken);
         }
 
-        public async Task<IEnumerable<MessageResponse>> GetMessagesAsync(MessageParams messageParams, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<MessageResponse>> GetMessagesAsync(string userId,MessageParams messageParams, CancellationToken cancellationToken = default)
         {
             var query = _context.Messages.OrderByDescending(m => m.DateSent).AsQueryable();
 
             query = messageParams.FilterBy switch
             {
-                "Inbox" => query.Where(x => x.RecipientId == messageParams.UserId && !x.RecipientDeleted),
-                "Outbox" => query.Where(x => x.SenderId == messageParams.UserId && !x.SenderDeleted),
-                _ => query.Where(x => x.RecipientId == messageParams.UserId && !x.RecipientDeleted && x.DateRead == null)
+                "Inbox" => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted),
+                "Outbox" => query.Where(x => x.SenderId == userId && !x.SenderDeleted),
+                _ => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.DateRead == null)
             };
 
             return await query.Select(msg => new MessageResponse

@@ -8,6 +8,7 @@ using Plannial.Core.Extensions;
 using Plannial.Core.Models.Params;
 using Plannial.Core.Models.Requests;
 using Plannial.Core.Models.Responses;
+using Plannial.Core.Queries;
 
 namespace Plannial.Api.Controllers
 {
@@ -30,10 +31,12 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpGet(Name = nameof(GetMessages))]
-        public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessages([FromQuery]MessageParams messageParams)
+        public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessages([FromQuery]MessageParams messageParams, CancellationToken cancellationToken)
         {
-            //GetMessages.Query
-            return Ok();
+            var messages = await _mediator.Send(
+                new GetMessages.Query(User.GetUserId(), messageParams), cancellationToken);
+
+            return Ok(messages);
         }
 
     }
