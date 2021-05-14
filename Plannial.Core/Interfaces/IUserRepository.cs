@@ -7,5 +7,6 @@ namespace Plannial.Core.Interfaces
     {
         Task<AppUser> GetUserAsync(string id);
         Task<AppUser> GetUserByEmailAsync(string email);
+        Task AddUserAsync(AppUser user, string password);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
@@ -12,6 +14,23 @@ namespace Plannial.Core.Repositories
         public UserRepository(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
+        }
+
+        public async Task AddUserAsync(AppUser user, string password)
+        {
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                return;
+            }
+
+            var sb = new StringBuilder();
+            foreach (var error in result.Errors)
+            {
+                sb.Append(error.Description);
+            }
+            throw new InvalidOperationException(sb.ToString());
         }
 
         public async Task<AppUser> GetUserAsync(string id)

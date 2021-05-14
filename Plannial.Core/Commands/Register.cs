@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
+using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Commands
@@ -16,31 +12,21 @@ namespace Plannial.Core.Commands
 
         public class Handler : IRequestHandler<Command>
         {
-            private readonly UserManager<AppUser> _userManager;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(UserManager<AppUser> userManager)
+            public Handler(IUserRepository userRepository)
             {
-                _userManager = userManager;
+                _userRepository = userRepository;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = new AppUser { Email = request.Email, UserName = request.Email };
-                var result = await _userManager.CreateAsync(user, request.Password);
 
-                if (result.Succeeded)
-                {
-                    return Unit.Value;
-                }
+                await _userRepository.AddUserAsync(user, request.Password);
 
-                var sb = new StringBuilder();
-                foreach (var error in result.Errors)
-                {
-                    sb.Append(error.Description);
-                }
-                throw new InvalidOperationException(sb.ToString());
+                return Unit.Value;
             }
         }
-
     }
 }
