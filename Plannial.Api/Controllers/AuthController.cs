@@ -31,6 +31,5 @@ namespace Plannial.Api.Controllers
             var user = await _mediator.Send(new Login.Command(loginRequest.Email, loginRequest.Password));
             return user;
         }
-
     }
 }

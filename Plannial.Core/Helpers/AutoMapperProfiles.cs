@@ -9,7 +9,9 @@ namespace Plannial.Core.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<AppUser, UserResponse>();
-            CreateMap<Subject, SubjectResponse>();
+            CreateMap<Subject, SubjectResponse>().ForMember(dest => dest.Grade,
+                opt => opt.MapFrom(src => src.Grade.Value));
+
             CreateMap<Reminder, ReminderResponse>();
             CreateMap<Exam, ExamResponse>();
             CreateMap<Homework, HomeworkResponse>();

@@ -27,12 +27,13 @@ namespace Plannial.Core.Repositories
 
         public async Task<IEnumerable<SubjectResponse>> GetSubjectResponsesAsync(string userId, CancellationToken cancellationToken)
         {
-            return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams)
+            return await _context.Subjects.Include(x => x.Homeworks).Include(x => x.Exams).Include(x => x.Grade)
                 .Where(x => x.UserId == userId)
                 .Select(s => new SubjectResponse
                 {
                     Id = s.Id,
                     Description = s.Description,
+                    Grade = s.Grade.Value,
                     Name = s.Name,
                     Exams = s.Exams.Select(e => new ExamResponse
                     {

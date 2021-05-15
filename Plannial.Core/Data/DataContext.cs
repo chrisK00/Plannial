@@ -11,6 +11,7 @@ namespace Plannial.Core.Data
         {
         }
 
+        public DbSet<Grade> Grades { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Exam> Exams { get; set; }
@@ -21,6 +22,12 @@ namespace Plannial.Core.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+
+            builder.Entity<Grade>().HasMany<Subject>()
+                .WithOne(x => x.Grade);
+
+            builder.Entity<Grade>().Property(x => x.Value).HasMaxLength(1).HasColumnType("char");
 
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
             new CategoryEntityTypeConfig().Configure(builder.Entity<Category>());
