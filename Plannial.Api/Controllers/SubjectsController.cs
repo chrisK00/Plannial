@@ -76,10 +76,10 @@ namespace Plannial.Api.Controllers
 
 
         [HttpPost("{subjectId}/grade")]
-        public async Task<ActionResult> AddSubjectGrade([FromBody] string grade, int subjectId)
+        public async Task<ActionResult> AddSubjectGrade(AddSubjectGradeRequest addSubjectGradeRequest, int subjectId, CancellationToken cancellationToken)
         {
-            
+            await _mediator.Send(new AddSubjectGrade.Command(User.GetUserId(), subjectId, addSubjectGradeRequest.Grade), cancellationToken);
+            return NoContent();
         }
-
     }
 }

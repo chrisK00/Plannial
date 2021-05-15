@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
 using Plannial.Core.Interfaces;
@@ -15,7 +16,7 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<Grade> GetGradeAsync(string grade)
+        public async Task<Grade> GetGradeAsync(string grade, CancellationToken cancellationToken = default)
         {
             return await _context.Grades.FirstOrDefaultAsync(x => x.NormalizedValue == grade.ToUpper());
         }

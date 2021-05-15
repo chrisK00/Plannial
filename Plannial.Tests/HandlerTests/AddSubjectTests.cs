@@ -44,6 +44,5 @@ namespace Plannial.Tests.HandlerTests
             newSubject.Name.Should().BeEquivalentTo(command.Name);
             newSubject.Description.Should().BeEquivalentTo(command.Description);
         }
-
     }
 }

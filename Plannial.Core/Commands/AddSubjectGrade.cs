@@ -38,7 +38,7 @@ namespace Plannial.Core.Commands
 
                 if (!string.IsNullOrWhiteSpace(request.Grade))
                 {
-                    var grade = await _gradeRepository.GetGradeAsync(request.Grade);
+                    var grade = await _gradeRepository.GetGradeAsync(request.Grade, cancellationToken);
                     if (grade == null)
                     {
                         grade = new Grade { Value = request.Grade };
