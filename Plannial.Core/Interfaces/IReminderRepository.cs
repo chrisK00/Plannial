@@ -12,6 +12,7 @@ namespace Plannial.Core.Interfaces
         Task<Reminder> GetReminderAsync(string userId, int reminderId, CancellationToken cancellationToken = default);
         Task<IEnumerable<ReminderResponse>> GetReminderResponsesAsync(string userId, ReminderParams reminderParams, CancellationToken cancellationToken = default);
         Task AddReminderAsync(Reminder reminder, CancellationToken cancellationToken);
-        void RemoveReminder(Reminder reminder);
+        Task<IReadOnlyCollection<Reminder>> GetRemindersAsync(string userId, IEnumerable<int> reminderIds);
+        void RemoveReminders(IEnumerable<Reminder> reminders);
     }
 }

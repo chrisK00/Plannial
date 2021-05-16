@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
 
-namespace Plannial.Core.Commands
+namespace Plannial.Core.Commands.RemoveCommands
 {
     public static class RemoveExam
     {

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
@@ -15,7 +12,7 @@ namespace Plannial.Tests.HandlerTests
 {
     public class GetReminderTests
     {
-        private readonly Mock<IReminderRepository> _mockReminderRepository = new Mock<IReminderRepository>();
+        private readonly Mock<IReminderRepository> _mockReminderRepository = new();
         private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfiles>()));
         private readonly GetReminder.Handler _subject;
 
