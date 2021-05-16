@@ -36,5 +36,12 @@ namespace Plannial.Api.Controllers
             var reminders = await _mediator.Send(new GetReminders.Query(User.GetUserId(), reminderParams), cancellationToken);
             return Ok(reminders);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ReminderResponse>> GetReminder(int id, CancellationToken cancellationToken)
+        {
+            var reminder = await _mediator.Send(new GetReminder.Query(User.GetUserId(), id), cancellationToken);
+            return reminder;
+        }
     }
 }
