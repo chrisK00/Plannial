@@ -10,7 +10,7 @@ using Plannial.Core.Data;
 namespace Plannial.Core.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210511161140_Init")]
+    [Migration("20210516083338_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -280,6 +280,22 @@ namespace Plannial.Core.Data.Migrations
                     b.ToTable("Exams");
                 });
 
+            modelBuilder.Entity("Plannial.Core.Models.Entities.Grade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(1)
+                        .HasColumnType("char(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Grades");
+                });
+
             modelBuilder.Entity("Plannial.Core.Models.Entities.Homework", b =>
                 {
                     b.Property<int>("Id")
@@ -334,9 +350,15 @@ namespace Plannial.Core.Data.Migrations
                     b.Property<DateTime>("DateSent")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("RecipientId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("SenderDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("SenderId")
                         .IsRequired()
@@ -348,7 +370,7 @@ namespace Plannial.Core.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Message");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Plannial.Core.Models.Entities.Reminder", b =>
@@ -364,14 +386,14 @@ namespace Plannial.Core.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -408,6 +430,9 @@ namespace Plannial.Core.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GradeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -418,6 +443,8 @@ namespace Plannial.Core.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GradeId");
 
                     b.HasIndex("UserId");
 
@@ -515,13 +542,13 @@ namespace Plannial.Core.Data.Migrations
                     b.HasOne("Plannial.Core.Models.Entities.AppUser", null)
                         .WithMany("MessagesRecieved")
                         .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Plannial.Core.Models.Entities.AppUser", null)
                         .WithMany("MessagesSent")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -542,11 +569,17 @@ namespace Plannial.Core.Data.Migrations
 
             modelBuilder.Entity("Plannial.Core.Models.Entities.Subject", b =>
                 {
+                    b.HasOne("Plannial.Core.Models.Entities.Grade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("GradeId");
+
                     b.HasOne("Plannial.Core.Models.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Grade");
                 });
 
             modelBuilder.Entity("Plannial.Core.Models.Entities.AppUser", b =>

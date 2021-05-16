@@ -9,10 +9,8 @@
         {
             get => _value; set
             {
-                _value = value;
-                NormalizedValue = value.ToUpper();
+                _value = value.ToUpper();
             }
         }
-        public string NormalizedValue { get; set; }
     }
 }

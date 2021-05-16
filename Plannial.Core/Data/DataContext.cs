@@ -27,7 +27,8 @@ namespace Plannial.Core.Data
             builder.Entity<Grade>().HasMany<Subject>()
                 .WithOne(x => x.Grade);
 
-            builder.Entity<Grade>().Property(x => x.Value).HasMaxLength(1).HasColumnType("char");
+            builder.Entity<Grade>().Property(x => x.Value)
+                .HasMaxLength(1).HasColumnType("char");
 
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
             new CategoryEntityTypeConfig().Configure(builder.Entity<Category>());

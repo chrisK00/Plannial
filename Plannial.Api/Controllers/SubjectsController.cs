@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
@@ -73,7 +72,6 @@ namespace Plannial.Api.Controllers
 
             return CreatedAtRoute(nameof(GetSubjects), homework);
         }
-
 
         [HttpPost("{subjectId}/grade")]
         public async Task<ActionResult> AddSubjectGrade(AddSubjectGradeRequest addSubjectGradeRequest, int subjectId, CancellationToken cancellationToken)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -16,7 +12,6 @@ namespace Plannial.Tests.HandlerTests
 {
     public class AddSubjectGradeTests
     {
-
         private readonly Mock<ISubjectRepository> _subjectRepository = new();
         private readonly Mock<IGradeRepository> _gradeRepository = new();
         private readonly Mock<IUnitOfWork> _unitOfWork = new();
