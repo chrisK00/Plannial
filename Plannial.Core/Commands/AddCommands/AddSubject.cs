@@ -9,7 +9,7 @@ using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
 using Plannial.Core.Models.Responses;
 
-namespace Plannial.Core.Commands
+namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddSubject
     {

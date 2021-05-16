@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
 
-namespace Plannial.Core.Commands
+namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddSubjectGrade
     {
