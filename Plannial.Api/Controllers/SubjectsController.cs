@@ -39,6 +39,11 @@ namespace Plannial.Api.Controllers
         ///         "name":"Math",
         ///         "description:"not so fun"
         ///     }
+        ///     
+        ///     POST /Subject
+        ///     {
+        ///         "name":"Math"
+        ///     }
         /// </remarks>
         /// <param name="addSubjectRequest"></param>
         /// <param name="cancellationToken"></param>
@@ -73,6 +78,30 @@ namespace Plannial.Api.Controllers
             return CreatedAtRoute(nameof(GetSubjects), homework);
         }
 
+        /// <summary>
+        /// Edits the subject's grade property
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /Subject/grade
+        ///     {
+        ///         grade:""   
+        ///     }
+        ///     
+        ///     POST /Subject/grade
+        ///     {
+        ///         grade:"A"   
+        ///     }
+        /// </remarks>
+        /// <param name="addSubjectGradeRequest"></param>
+        /// <param name="subjectId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <response code="204">Set the subject's grade successfully</response>
+        /// <response code="404">Could not find the specified subject</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("{subjectId}/grade")]
         public async Task<ActionResult> AddSubjectGrade(AddSubjectGradeRequest addSubjectGradeRequest, int subjectId, CancellationToken cancellationToken)
         {

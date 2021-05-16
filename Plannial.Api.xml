@@ -37,12 +37,41 @@
                     "name":"Math",
                     "description:"not so fun"
                 }
+                
+                POST /Subject
+                {
+                    "name":"Math"
+                }
             </remarks>
             <param name="addSubjectRequest"></param>
             <param name="cancellationToken"></param>
             <returns>A newly created subject</returns>
             <response code="201">Returns the newly created item</response>
             <response code="400">In case of validation errors or if the database was not able to add the item</response>
+        </member>
+        <member name="M:Plannial.Api.Controllers.SubjectsController.AddSubjectGrade(Plannial.Core.Models.Requests.AddSubjectGradeRequest,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Edits the subject's grade property
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /Subject/grade
+                {
+                    grade:""   
+                }
+                
+                POST /Subject/grade
+                {
+                    grade:"A"   
+                }
+            </remarks>
+            <param name="addSubjectGradeRequest"></param>
+            <param name="subjectId"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <response code="204">Set the subject's grade successfully</response>
+            <response code="404">Could not find the specified subject</response>
         </member>
     </members>
 </doc>
