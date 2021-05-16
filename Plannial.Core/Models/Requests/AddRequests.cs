@@ -1,5 +1,6 @@
 ﻿using System;
 using Plannial.Core.Helpers;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Models.Requests
 {

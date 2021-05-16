@@ -18,7 +18,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<Grade> GetGradeAsync(string grade, CancellationToken cancellationToken = default)
         {
-            return await _context.Grades.FirstOrDefaultAsync(x => x.Value == grade.ToUpper());
+            return await _context.Grades.FirstOrDefaultAsync(x => x.Value == grade.ToUpper(), cancellationToken);
         }
     }
 }

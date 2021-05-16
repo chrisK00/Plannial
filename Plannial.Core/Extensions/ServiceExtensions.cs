@@ -19,6 +19,7 @@ namespace Plannial.Core.Extensions
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
+            services.AddScoped<IReminderRepository, ReminderRepository>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddMediatR(typeof(GetSubjects).Assembly);
             services.AddScoped<ISubjectRepository, SubjectRepository>();

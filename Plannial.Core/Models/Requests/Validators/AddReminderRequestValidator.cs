@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Plannial.Core.Helpers;
 
 namespace Plannial.Core.Models.Requests.Validators
 {
@@ -6,7 +7,8 @@ namespace Plannial.Core.Models.Requests.Validators
     {
         public AddReminderRequestValidator()
         {
-            RuleFor(x => x.Name).IsInEnum();
+            RuleFor(x => x.Priority).IsInEnum();
+            RuleFor(x => x.Name).NotEmpty();
         }
     }
 }
