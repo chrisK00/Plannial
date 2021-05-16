@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Plannial.Core.Commands;
+using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Extensions;
 using Plannial.Core.Models.Params;
 using Plannial.Core.Models.Requests;

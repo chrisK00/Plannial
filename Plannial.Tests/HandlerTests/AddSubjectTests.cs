@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Plannial.Core.Commands;
+using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
 using Xunit;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Plannial.Core.Commands;
+using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
 using Xunit;

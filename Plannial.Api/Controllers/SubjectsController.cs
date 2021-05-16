@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Plannial.Core.Commands;
+using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Extensions;
 using Plannial.Core.Models.Requests;
 using Plannial.Core.Models.Responses;
