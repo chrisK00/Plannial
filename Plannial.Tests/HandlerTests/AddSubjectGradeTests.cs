@@ -50,5 +50,26 @@ namespace Plannial.Tests.HandlerTests
             mockSubject.Grade.Id.Should().Be(default);
         }
 
+        [Fact]
+        public async Task AddSubjectGrade_UsesExistingGrade_IfExists()
+        {
+            var command = new AddSubjectGrade.Command("userid", 1, "A");
+            var existingGrade = new Grade { Id = 1, Value = "A" };
+
+            var mockSubject = new Subject();
+
+            _subjectRepository.Setup(_ => _.GetSubjectByIdAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockSubject);
+
+            _gradeRepository.Setup(_ => _.GetGradeAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(existingGrade);
+
+            // act
+            await _subject.Handle(command, default);
+
+            // assert
+            mockSubject.Grade.Id.Should().Be(existingGrade.Id);
+            mockSubject.Grade.Value.Should().Be(existingGrade.Value);
+        }
     }
 }
