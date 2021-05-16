@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Commands.RemoveCommands
 {
@@ -31,14 +32,33 @@ namespace Plannial.Core.Commands.RemoveCommands
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 var reminders = await _reminderRepository.GetRemindersAsync(request.UserId, request.ReminderIds);
-               
+                ICollection<Reminder> remindersToRemove = new List<Reminder>();
+
                 if (reminders.Count < 1)
                 {
                     _logger.LogWarning($"Could not find any reminders from request {request}");
                     throw new KeyNotFoundException("Could not find any reminders");
                 }
 
-                _reminderRepository.RemoveReminders(reminders);
+                foreach (var reminder in reminders)
+                {
+                    if (reminder.DeletedDate == null)
+                    {
+                        reminder.DeletedDate = DateTime.UtcNow;
+                        _logger.LogInformation($"Reminder {reminder.Name} recieved a soft delete date {reminder.DeletedDate}");
+                    }
+                    else
+                    {
+                        remindersToRemove.Add(reminder);
+                        _logger.LogInformation($"Adding reminder {reminder.Name}: to remove");
+                    }
+                }
+
+                if (remindersToRemove.Count > 0)
+                {
+                    _logger.LogInformation("Removing reminders from database");
+                    _reminderRepository.RemoveReminders(remindersToRemove);
+                }
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {

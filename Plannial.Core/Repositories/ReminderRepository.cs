@@ -48,7 +48,7 @@ namespace Plannial.Core.Repositories
             query = reminderParams.FilterBy switch
             {
                 "due" => query.Where(x => x.DueDate <= DateTime.UtcNow),
-                "all" => query.IgnoreQueryFilters(),
+                "removed" => query.IgnoreQueryFilters(),
                 _ => query
             };
 
@@ -66,7 +66,7 @@ namespace Plannial.Core.Repositories
         public async Task<IReadOnlyCollection<Reminder>> GetRemindersAsync(string userId, IEnumerable<int> reminderIds)
         {
             return await _context.Reminders.Where(x => x.UserId == userId)
-                .Where(reminder => reminderIds.Contains(reminder.Id)).ToListAsync();
+                .Where(reminder => reminderIds.Contains(reminder.Id)).IgnoreQueryFilters().ToListAsync();
         }
 
         public void RemoveReminders(IEnumerable<Reminder> reminders)
