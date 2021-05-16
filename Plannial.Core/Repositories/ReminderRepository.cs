@@ -37,7 +37,6 @@ namespace Plannial.Core.Repositories
             var query = _context.Reminders.Where(x => x.UserId == userId).Select(reminder => new ReminderResponse
             {
                 Id = reminder.Id,
-                Category = reminder.Category.Name,
                 Priority = reminder.Priority,
                 DeletedDate = reminder.DeletedDate,
                 Description = reminder.Description,

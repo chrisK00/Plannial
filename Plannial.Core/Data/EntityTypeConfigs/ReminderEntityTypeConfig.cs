@@ -22,9 +22,6 @@ namespace Plannial.Core.Data.EntityTypeConfigs
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.HasOne(x => x.Category)
-                .WithMany();
-
             builder.HasQueryFilter(x => x.DeletedDate == null);
         }
     }

@@ -15,7 +15,6 @@ namespace Plannial.Core.Data
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Exam> Exams { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Reminder> Reminders { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
@@ -25,7 +24,6 @@ namespace Plannial.Core.Data
 
             new GradeEntityTypeConfig().Configure(builder.Entity<Grade>());
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
-            new CategoryEntityTypeConfig().Configure(builder.Entity<Category>());
             new ExamEntityTypeConfig().Configure(builder.Entity<Exam>());
             new HomeworkEntityTypeConfig().Configure(builder.Entity<Homework>());
             new ReminderEntityTypeConfig().Configure(builder.Entity<Reminder>());

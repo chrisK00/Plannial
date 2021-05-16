@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -9,44 +8,43 @@ using Plannial.Core.Interfaces;
 
 namespace Plannial.Core.Commands.RemoveCommands
 {
-    public static class RemoveExam
+    public static class RemoveHomework
     {
-        public record Command(int ExamId, string UserId) : IRequest;
+        public record Command(string UserId, int HomeworkId) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
+            private readonly IHomeworkRepository _homeworkRepository;
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IExamRepository _examRepository;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(IUnitOfWork unitOfWork, IExamRepository examRepository, ILogger<Handler> logger)
+            public Handler(IHomeworkRepository homeworkRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
             {
+                _homeworkRepository = homeworkRepository;
                 _unitOfWork = unitOfWork;
-                _examRepository = examRepository;
                 _logger = logger;
             }
-
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-          
-                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
+                var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
-                if (exam == null)
+                if (homework == null)
                 {
-                    _logger.LogWarning($"User tried to access exam: {request.ExamId}");
+                    _logger.LogWarning($"User tried to access homework: {request.HomeworkId}");
                     throw new UnauthorizedAccessException("You dont own this item");
                 }
 
-                _logger.LogInformation($"Removing exam {request}");
-                _examRepository.RemoveExam(exam);
+                _logger.LogInformation($"Removing homework {request}");
+                _homeworkRepository.RemoveHomework(homework);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
-                    _logger.LogError("Failed to remove exam");
-                    throw new DbUpdateException("Failed to remove exam");
+                    _logger.LogError("Failed to remove homework");
+                    throw new DbUpdateException("Failed to remove homework");
                 }
 
                 return Unit.Value;
+
             }
         }
     }

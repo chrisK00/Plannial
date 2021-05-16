@@ -9,7 +9,6 @@ namespace Plannial.Core.Models.Entities
         public string Description { get; set; }
         public DateTime? DueDate { get; set; }
         public Priority Priority { get; set; }
-        public Category Category { get; set; }
         public DateTime? DeletedDate { get; set; }
     }
 }
