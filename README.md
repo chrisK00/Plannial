@@ -10,7 +10,7 @@
 - Entity framework and SQL server
 - Swagger documentation
 - logging
-- Simple SignalR live messaging hub
+- Very simple SignalR live messaging hub
 - An angular client purely for testing the message hub real quick
 
 
