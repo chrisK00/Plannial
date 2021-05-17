@@ -3,16 +3,13 @@ using System.IO;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Plannial.Api.Hubs;
 using Plannial.Api.Middlewares;
-using Plannial.Core.Data;
 using Plannial.Core.Extensions;
-using Plannial.Core.Models.Entities;
 using Plannial.Core.Models.Requests.Validators;
 
 namespace Plannial.Api
@@ -29,10 +26,10 @@ namespace Plannial.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureServices();
+            services.ConfigureServices(Configuration);
             services.ConfigureIdentityServices(Configuration);
 
-            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddCors();
 
             services.AddControllers()
                 .AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<AddSubjectRequestValidator>());
@@ -60,12 +57,15 @@ namespace Plannial.Api
 
             app.UseRouting();
 
+            app.UseCors(config => config.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("hubs/message");
             });
         }
     }

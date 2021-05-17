@@ -8,7 +8,7 @@ namespace Plannial.Core.Models.Responses
         public string RecipientId { get; set; }
         public string SenderId { get; set; }
         public string Content { get; set; }
-        public DateTime DateSent { get; set; } = DateTime.UtcNow;
+        public DateTime DateSent { get; set; }
         public DateTime? DateRead { get; set; }
     }
 }

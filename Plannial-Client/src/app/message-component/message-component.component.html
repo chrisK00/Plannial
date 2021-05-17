@@ -1,0 +1,19 @@
+<form #loginForm="ngForm" (ngSubmit)="login()">
+    <label for="token">your token</label>
+    <input id="token" [(ngModel)]="token" name=" token" type="text">
+    <label for="recipientId">Recipient id</label>
+    <input id="recipientId" [(ngModel)]="recipientId" name="recipientId" type="text">
+    <button type="submit">Login</button>
+</form>
+
+<form #messageForm="ngForm" (ngSubmit)="send()">
+    <label for="message">Message</label>
+    <input id="message" [(ngModel)]="message" name="message" type="text">
+    <button type="submit">send</button>
+</form>
+
+<div *ngIf="(messageService.messageThread$ | async)?.length > 0">
+    <ul>
+        <li *ngFor="let msg of (messageService.messageThread$ | async)">{{msg.content}}</li>
+    </ul>
+</div>

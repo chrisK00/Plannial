@@ -6,7 +6,7 @@ namespace Plannial.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseApiController : ControllerBase
+    public abstract class BaseApiController : ControllerBase
     {
     }
 }
