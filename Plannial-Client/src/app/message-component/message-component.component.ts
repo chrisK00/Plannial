@@ -20,8 +20,7 @@ export class MessageComponentComponent implements OnInit {
     this.messageService.send(this.recipientId, this.message).then();
   }
 
-  login() {
-    console.log('hi');
+  connect() {
     this.messageService.createHubConnection(this.token, this.recipientId);
     localStorage.setItem('token', this.token);
   }
