@@ -1,6 +1,6 @@
 # Plannial
 
-- CQRS with MediatR, N-tier, Repository pattern with UnitOfWork, SOLID
+- CQRS with MediatR, N-tier, Repository pattern with UnitOfWork
 - Fluentvalidation
 - C# 9 Records 
 - realistic fake data seeding with Bogus 
@@ -10,5 +10,7 @@
 - Entity framework and SQL server
 - Swagger documentation
 - logging
+- Simple SignalR live messaging hub
+- An angular client purely for testing the message hub real quick
 
 
