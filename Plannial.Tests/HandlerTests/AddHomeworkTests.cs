@@ -8,6 +8,7 @@ using Moq;
 using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
+using Plannial.Core.Models.Entities;
 using Xunit;
 
 namespace Plannial.Tests.HandlerTests
@@ -37,6 +38,34 @@ namespace Plannial.Tests.HandlerTests
 
             await _subject.Invoking(_ => _.Handle(command, default))
                 .Should().ThrowAsync<UnauthorizedAccessException>();
+        }
+
+        [Fact]
+        public async Task AddHomework_AddsHomeworkToTheSubject_WhenSubjectExists()
+        {
+            var existingSubject = new Subject();
+
+            _subjectRepository.Setup(_ => _.GetSubjectByIdAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(existingSubject);
+
+            await _subject.Handle(new AddHomework.Command("Read up on penguins", string.Empty, DateTime.Now, 1,
+                Guid.NewGuid().ToString()), default);
+
+            existingSubject.Homeworks.Count.Should().BeGreaterThan(0);
+        }
+
+        [Fact]
+        public async Task AddHomework_Returns_NewHomework_IfSubject_Exists()
+        {
+            var homeworkToAdd = new AddHomework.Command("Read up on penguins", string.Empty, DateTime.Now, 1, Guid.NewGuid().ToString());
+
+            _subjectRepository.Setup(_ => _.GetSubjectByIdAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new Subject());
+
+            var newHomework = await _subject.Handle(homeworkToAdd, default);
+
+            newHomework.Should().NotBeNull();
+            newHomework.Name.Should().BeSameAs(homeworkToAdd.Name);
         }
     }
 }
