@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Data;
 using Plannial.Core.Models.Entities;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Plannial.Api
 {
@@ -14,6 +17,12 @@ namespace Plannial.Api
     {
         public static async Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .WriteTo.File("../Logs/serilog.txt", LogEventLevel.Error)
+                .CreateLogger();
+
             var host = CreateHostBuilder(args).Build();
 
             using var scope = host.Services.CreateScope();
@@ -36,6 +45,7 @@ namespace Plannial.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
