@@ -4,7 +4,7 @@
 - Fluentvalidation
 - C# 9 Records 
 - realistic fake data seeding with Bogus 
-- Automapper
+- Automapper (not fully utilized) 
 - Unit tests with xUnit, fluentassertions, Moq
 - Authentication and Authorization with JWT tokens and Identity framework
 - Entity framework and SQL server
