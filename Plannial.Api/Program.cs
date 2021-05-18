@@ -9,6 +9,8 @@ using Plannial.Core.Data;
 using Plannial.Core.Models.Entities;
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Json;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Plannial.Api
@@ -20,7 +22,7 @@ namespace Plannial.Api
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                .WriteTo.File("../Logs/serilog.txt", LogEventLevel.Error)
+                .WriteTo.File(new JsonFormatter(),"../Logs/serilog.json", LogEventLevel.Error)
                 .CreateLogger();
 
             var host = CreateHostBuilder(args).Build();
