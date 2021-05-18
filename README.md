@@ -9,7 +9,7 @@
 - Authentication and Authorization with JWT tokens and Identity framework
 - Entity framework and SQL server
 - Swagger documentation
-- logging
+- Serilog
 - Very simple SignalR live messaging hub
 - An angular client purely for testing the message hub real quick
 
