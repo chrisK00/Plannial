@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Commands.RemoveCommands;
@@ -49,6 +50,9 @@ namespace Plannial.Api.Controllers
             return Ok(messages);
         }
 
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete("{messageId}")]
         public async Task<ActionResult> RemoveMessage(int messageId)
         {
