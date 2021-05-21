@@ -17,15 +17,25 @@ namespace Plannial.Core.Queries
         public class Handler : IRequestHandler<Query, IEnumerable<MessageResponse>>
         {
             private readonly IMessageRepository _messageRepository;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(IMessageRepository messageRepository)
+            public Handler(IMessageRepository messageRepository, IUserRepository userRepository)
             {
                 _messageRepository = messageRepository;
+                _userRepository = userRepository;
             }
 
-            public Task<IEnumerable<MessageResponse>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<MessageResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var messages = _messageRepository.GetMessageThreadAsync(request.UserId, request.OtherUserId, cancellationToken);
+                var messages = await _messageRepository.GetMessageThreadAsync(request.UserId, request.OtherUserId, cancellationToken);
+                var user = await _userRepository.GetUserAsync(request.UserId);
+                var otherUser = await _userRepository.GetUserAsync(request.OtherUserId);
+
+                foreach (var message in messages)
+                {
+                    message.SenderUsername = message.SenderId == request.UserId ? user.UserName : otherUser.UserName;
+                    message.RecipientUsername = message.RecipientUsername == request.UserId ? user.UserName : otherUser.UserName;
+                }
                 return messages;
             }
         }
