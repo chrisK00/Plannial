@@ -26,9 +26,15 @@ namespace Plannial.Core.Repositories
             await _context.Messages.AddAsync(message, cancellationToken);
         }
 
-        public async Task<IEnumerable<MessageResponse>> GetMessagesAsync(string userId,MessageParams messageParams, CancellationToken cancellationToken = default)
+        public async Task<Message> GetMessage(int messageId, string userId)
         {
-            var query = _context.Messages.OrderByDescending(m => m.DateSent).AsQueryable();
+            return await _context.Messages.FirstOrDefaultAsync(x => x.SenderId == userId || x.RecipientId == userId
+            && x.Id == messageId);
+        }
+
+        public async Task<IEnumerable<MessageResponse>> GetMessagesAsync(string userId, MessageParams messageParams, CancellationToken cancellationToken = default)
+        {
+            var query = _context.Messages.OrderByDescending(m => m.DateSent).AsNoTracking().AsQueryable();
 
             query = messageParams.FilterBy switch
             {
@@ -70,6 +76,11 @@ namespace Plannial.Core.Repositories
                 DateRead = msg.DateRead,
                 Id = msg.Id
             });
+        }
+
+        public void RemoveMessage(Message message)
+        {
+            _context.Remove(message);
         }
     }
 }

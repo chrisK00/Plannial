@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands.AddCommands;
+using Plannial.Core.Commands.RemoveCommands;
 using Plannial.Core.Extensions;
 using Plannial.Core.Models.Params;
 using Plannial.Core.Models.Requests;
@@ -46,6 +47,13 @@ namespace Plannial.Api.Controllers
                 new GetMessageThread.Query(User.GetUserId(), userId), cancellationToken);
 
             return Ok(messages);
+        }
+
+        [HttpDelete("{messageId}")]
+        public async Task<ActionResult> RemoveMessage(int messageId)
+        {
+            await _mediator.Send(new RemoveMessage.Command(messageId, User.GetUserId()));
+            return NoContent();
         }
 
     }
