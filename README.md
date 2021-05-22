@@ -11,6 +11,7 @@
 - Swagger documentation
 - Serilog
 - Very simple SignalR live messaging hub
+- Ref by id
 - An angular client purely for testing the message hub real quick
 
 
