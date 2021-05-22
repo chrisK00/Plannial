@@ -1,0 +1,12 @@
+<form *ngIf="(authService.currentUser$ | async) === null" #loginForm="ngForm"
+    (ngSubmit)="login()" class="d-flex col-7">
+    <input [(ngModel)]="model.username" name="username" class="form-control mr-1" type="search"
+        placeholder="Username" required>
+    <input [(ngModel)]="model.password" name="password" class="form-control mr-1" type="password"
+        placeholder="Password" required>
+    <button [disabled]="loginForm.invalid" class="btn btn-success" type="submit">Login</button>
+</form>
+
+<div *ngIf="(authService.currentUser$ | async) !== null">
+    <app-message-component></app-message-component>
+</div>

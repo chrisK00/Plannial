@@ -12,6 +12,5 @@ namespace Plannial.Core.Models.Entities
         public string Content { get; set; }
         public DateTime DateSent { get; set; } = DateTime.UtcNow;                            
         public DateTime? DateRead { get; set; }
-  
     }
 }
