@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = environment.baseUrl + 'account/';
+  private authUrl = environment.baseUrl + 'auth/';
   private currentUser = new ReplaySubject<User>(1);
   currentUser$ = this.currentUser.asObservable();
 

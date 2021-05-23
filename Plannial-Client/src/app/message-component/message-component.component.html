@@ -2,8 +2,6 @@
     <div class="col-10">
         <form #loginForm="ngForm" (ngSubmit)="connect()">
             <div class="input-group">
-                <label for="token">token</label>
-                <input required class="form-control ml-2" id="token" [(ngModel)]="token" name=" token" type="text">
                 <label class="ml-4" for="recipientId">Recipient id</label>
                 <input required class="form-control ml-2" id="recipientId" [(ngModel)]="recipientId" name="recipientId"
                     type="text">
@@ -23,7 +21,7 @@
 
         <div *ngIf="(messageService.messageThread$ | async)?.length > 0">
             <ul>
-                <li *ngFor="let msg of (messageService.messageThread$ | async)">{{msg.senderId}}: {{msg.content}}</li>
+                <li *ngFor="let msg of (messageService.messageThread$ | async)">{{msg.senderUsername}}: {{msg.content}}</li>
             </ul>
         </div>
     </div>

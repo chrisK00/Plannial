@@ -20,13 +20,15 @@ namespace Plannial.Core.Commands.AddCommands
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
             private readonly IMapper _mapper;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(IMessageRepository messageRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger, IMapper mapper)
+            public Handler(IMessageRepository messageRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger, IMapper mapper, IUserRepository userRepository)
             {
                 _messageRepository = messageRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
                 _mapper = mapper;
+                _userRepository = userRepository;
             }
 
             public async Task<MessageResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -47,7 +49,12 @@ namespace Plannial.Core.Commands.AddCommands
                     throw new DbUpdateException("Failed to send message");
                 }
 
-                return _mapper.Map<MessageResponse>(message);
+                var messageResponse = _mapper.Map<MessageResponse>(message);
+                var recipient = await _userRepository.GetUserAsync(request.RecipientId);
+                var sender = await _userRepository.GetUserAsync(request.SenderId);
+                messageResponse.RecipientUsername = recipient.UserName;
+                messageResponse.SenderUsername = sender.UserName;
+                return messageResponse;
             }
         }
     }

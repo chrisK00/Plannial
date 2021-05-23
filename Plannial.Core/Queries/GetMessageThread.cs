@@ -12,7 +12,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetMessageThread
     {
-        public record Query(string UserId,string OtherUserId) : IRequest<IEnumerable<MessageResponse>>;
+        public record Query(string UserId, string OtherUserId) : IRequest<IEnumerable<MessageResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<MessageResponse>>
         {
@@ -34,7 +34,7 @@ namespace Plannial.Core.Queries
                 foreach (var message in messages)
                 {
                     message.SenderUsername = message.SenderId == request.UserId ? user.UserName : otherUser.UserName;
-                    message.RecipientUsername = message.RecipientUsername == request.UserId ? user.UserName : otherUser.UserName;
+                    message.RecipientUsername = message.RecipientId == request.UserId ? user.UserName : otherUser.UserName;
                 }
                 return messages;
             }

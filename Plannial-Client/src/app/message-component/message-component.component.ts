@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../_models/message';
+import { take } from 'rxjs/operators';
+import { User } from '../_models/user';
+import { AuthService } from '../_services/auth.service';
 import { MessageService } from '../_services/message.service';
 
 
@@ -11,9 +13,11 @@ import { MessageService } from '../_services/message.service';
 export class MessageComponentComponent implements OnInit {
   recipientId?: string;
   message?: string;
-  token?: string;
-  constructor(public messageService: MessageService) { }
+  user: User;
+  constructor(public messageService: MessageService, private authService: AuthService) { }
+
   ngOnInit(): void {
+    this.authService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
   }
 
   send() {
@@ -21,8 +25,8 @@ export class MessageComponentComponent implements OnInit {
   }
 
   connect() {
-    this.messageService.createHubConnection(this.token, this.recipientId);
-    localStorage.setItem('token', this.token);
+    this.messageService.createHubConnection(this.user, this.recipientId);
+
   }
 
 }

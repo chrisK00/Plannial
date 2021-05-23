@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { Message } from '../_models/message';
+import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +17,23 @@ export class MessageService {
 
   constructor() { }
 
-  createHubConnection(token: string, otherUserId: string) {
+  createHubConnection(user: User, otherUserId: string) {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.messageHubUrl + '?user=' + otherUserId, {
-        accessTokenFactory: () => token
-      }).withAutomaticReconnect().build()
+        accessTokenFactory: () => user.token
+      }).withAutomaticReconnect().build();
 
     this.hubConnection.start().catch(e => console.log(e));
 
     this.hubConnection.on('MessageThread', messages => {
-      console.log(messages);;
+      console.log(messages);
       this.messageThreadSource.next(messages);
     })
 
     this.hubConnection.on('NewMessage', message => {
       console.log(message);
       this.messageThread$.pipe(take(1)).subscribe(messages => {
-        this.messageThreadSource.next([...messages, message])
+        this.messageThreadSource.next([...messages, message]);
       })
     })
   }

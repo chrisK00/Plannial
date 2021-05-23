@@ -75,7 +75,7 @@ namespace Plannial.Core.Repositories
                 DateSent = msg.DateSent,
                 DateRead = msg.DateRead,
                 Id = msg.Id
-            });
+            }).ToList();
         }
 
         public void RemoveMessage(Message message)
