@@ -42,10 +42,10 @@ export class MessageService {
     this.hubConnection.stop();
   }
 
-  async send(recipientId: string, content: string) {
-    console.log(recipientId);
+  async send(recipientEmail: string, content: string) {
+    console.log(recipientEmail);
     console.log(content);
-    return this.hubConnection.invoke('AddMessage', { recipientId, content })
+    return this.hubConnection.invoke('AddMessage', { recipientEmail, content })
       .catch(e => console.log(e));
   }
 }

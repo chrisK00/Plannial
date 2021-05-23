@@ -12,7 +12,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetMessageThread
     {
-        public record Query(string UserId, string OtherUserId) : IRequest<IEnumerable<MessageResponse>>;
+        public record Query(string UserId, string OtherUserEmail) : IRequest<IEnumerable<MessageResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<MessageResponse>>
         {
@@ -27,9 +27,19 @@ namespace Plannial.Core.Queries
 
             public async Task<IEnumerable<MessageResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var messages = await _messageRepository.GetMessageThreadAsync(request.UserId, request.OtherUserId, cancellationToken);
+                var otherUser = await _userRepository.GetUserByEmailAsync(request.OtherUserEmail);
+
+                if (otherUser == null)
+                {
+                    throw new KeyNotFoundException("Could not find user with the specified email");
+                }
+                var messages = await _messageRepository.GetMessageThreadAsync(request.UserId, otherUser.Id, cancellationToken);
                 var user = await _userRepository.GetUserAsync(request.UserId);
-                var otherUser = await _userRepository.GetUserAsync(request.OtherUserId);
+                
+                if (otherUser == null)
+                {
+                    throw new KeyNotFoundException("User with this email was not found");
+                }
 
                 foreach (var message in messages)
                 {

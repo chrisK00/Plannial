@@ -11,7 +11,7 @@ import { MessageService } from '../_services/message.service';
   styleUrls: ['./message-component.component.css']
 })
 export class MessageComponentComponent implements OnInit {
-  recipientId?: string;
+  recipientEmail?: string;
   message?: string;
   user: User;
   constructor(public messageService: MessageService, private authService: AuthService) { }
@@ -21,11 +21,11 @@ export class MessageComponentComponent implements OnInit {
   }
 
   send() {
-    this.messageService.send(this.recipientId, this.message).then();
+    this.messageService.send(this.recipientEmail, this.message).then();
   }
 
   connect() {
-    this.messageService.createHubConnection(this.user, this.recipientId);
+    this.messageService.createHubConnection(this.user, this.recipientEmail);
 
   }
 

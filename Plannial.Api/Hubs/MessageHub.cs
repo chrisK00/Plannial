@@ -22,11 +22,11 @@ namespace Plannial.Api.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            var otherUserId = Context.GetHttpContext().Request.Query["user"].ToString();
-            var groupName = GetGroupName(Context.User.GetUserId(), otherUserId);
+            var otherUserEmail = Context.GetHttpContext().Request.Query["user"].ToString();
+            var groupName = GetGroupName(Context.User.GetUserId(), otherUserEmail);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            var messages = await _mediator.Send(new GetMessageThread.Query(Context.User.GetUserId(), otherUserId));
+            var messages = await _mediator.Send(new GetMessageThread.Query(Context.User.GetUserId(), otherUserEmail));
 
             await Clients.Group(groupName).SendAsync("MessageThread", messages);
         }
@@ -39,8 +39,8 @@ namespace Plannial.Api.Hubs
         public async Task AddMessage(AddMessageRequest addMessageRequest)
         {
             var message = await _mediator.Send(
-              new AddMessage.Command(Context.User.GetUserId(), addMessageRequest.RecipientId, addMessageRequest.Content));
-            var groupName = GetGroupName(Context.User.GetUserId(), addMessageRequest.RecipientId);
+              new AddMessage.Command(Context.User.GetUserId(), addMessageRequest.RecipientEmail, addMessageRequest.Content));
+            var groupName = GetGroupName(Context.User.GetUserId(), addMessageRequest.RecipientEmail);
 
             await Clients.Group(groupName).SendAsync("NewMessage", message);
         }

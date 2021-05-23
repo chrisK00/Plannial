@@ -40,7 +40,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<AppUser> GetUserByEmailAsync(string email)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return await _userManager.FindByEmailAsync(email.Trim());
         }
     }
 }

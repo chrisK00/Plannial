@@ -27,7 +27,7 @@ namespace Plannial.Api.Controllers
         public async Task<ActionResult<MessageResponse>> AddMessage([FromBody]AddMessageRequest addMessageRequest, CancellationToken cancellationToken)
         {
             var message = await _mediator.Send(
-                new AddMessage.Command(User.GetUserId(), addMessageRequest.RecipientId, addMessageRequest.Content),cancellationToken);
+                new AddMessage.Command(User.GetUserId(), addMessageRequest.RecipientEmail, addMessageRequest.Content),cancellationToken);
     
             return CreatedAtRoute(nameof(GetMessages), new MessageParams { FilterBy = "Outbox" }, message);
         }

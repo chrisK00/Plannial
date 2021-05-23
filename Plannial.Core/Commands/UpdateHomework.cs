@@ -12,7 +12,7 @@ namespace Plannial.Core.Commands
 {
     public static class UpdateHomework
     {
-        public record Command(int homeworkId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<HomeworkResponse>;
+        public record Command(int HomeworkId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<HomeworkResponse>;
 
         public class Handler : IRequestHandler<Command, HomeworkResponse>
         {
@@ -31,11 +31,11 @@ namespace Plannial.Core.Commands
 
             public async Task<HomeworkResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var homework = await _homeworkRepository.GetHomeworkAsync(request.homeworkId, request.UserId, cancellationToken);
+                var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
                 if (homework == null)
                 {
-                    _logger.LogWarning($"User tried to access homework: {request.homeworkId}");
+                    _logger.LogWarning($"User tried to access homework: {request.HomeworkId}");
                     throw new UnauthorizedAccessException("You dont own this item");
                 }
 

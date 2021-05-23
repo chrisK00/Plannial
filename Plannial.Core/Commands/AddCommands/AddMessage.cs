@@ -12,7 +12,7 @@ namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddMessage
     {
-        public record Command(string SenderId, string RecipientId, string Content) : IRequest<MessageResponse>;
+        public record Command(string SenderId, string RecipientEmail, string Content) : IRequest<MessageResponse>;
 
         public class Handler : IRequestHandler<Command, MessageResponse>
         {
@@ -33,14 +33,16 @@ namespace Plannial.Core.Commands.AddCommands
 
             public async Task<MessageResponse> Handle(Command request, CancellationToken cancellationToken)
             {
+                var recipient = await _userRepository.GetUserByEmailAsync(request.RecipientEmail);
+
                 var message = new Message
                 {
-                    RecipientId = request.RecipientId,
+                    RecipientId = recipient.Id,
                     SenderId = request.SenderId,
                     Content = request.Content
                 };
 
-                _logger.LogInformation($"Sending messge to {request.RecipientId}");
+                _logger.LogInformation($"Sending messge to {recipient.Id}");
                 await _messageRepository.AddMessageAsync(message, cancellationToken);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
@@ -50,7 +52,6 @@ namespace Plannial.Core.Commands.AddCommands
                 }
 
                 var messageResponse = _mapper.Map<MessageResponse>(message);
-                var recipient = await _userRepository.GetUserAsync(request.RecipientId);
                 var sender = await _userRepository.GetUserAsync(request.SenderId);
                 messageResponse.RecipientUsername = recipient.UserName;
                 messageResponse.SenderUsername = sender.UserName;
