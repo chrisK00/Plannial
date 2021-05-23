@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Plannial.Core.Helpers;
 using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Data
@@ -22,6 +22,7 @@ namespace Plannial.Core.Data
                  .Generate(3).ToList();
 
             users.Add(new AppUser { Email = "christian@gmail.com" });
+            users.Add(new AppUser { Email = "lester@gmail.com" });
 
             foreach (var user in users)
             {
@@ -46,10 +47,20 @@ namespace Plannial.Core.Data
                 item.Homeworks.Add(homework);
             }
 
-            //! TODO fake reminders
+            var reminders = CreateReminderGenerator()
+                .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
+                .Generate(5).ToList();
 
             await context.Subjects.AddRangeAsync(subjects);
+            await context.Reminders.AddRangeAsync(reminders);
             await context.SaveChangesAsync();
+        }
+
+        private static Faker<Reminder> CreateReminderGenerator()
+        {
+            return new Faker<Reminder>()
+                .RuleFor(x => x.Name, x => x.Lorem.Sentence())
+                .RuleFor(x => x.Priority, x => x.Random.Enum<Priority>());
         }
 
         private static Faker<Exam> CreateExamGenerator()
