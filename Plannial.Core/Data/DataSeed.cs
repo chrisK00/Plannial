@@ -30,10 +30,8 @@ namespace Plannial.Core.Data
                 await userManager.CreateAsync(user, "Password123");
             }
 
-            var subjects = new Faker<Subject>()
+            var subjects = CreateSubjectGenerator()
                  .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
-                 .RuleFor(x => x.Name, x => x.Name.JobTitle())
-                 .RuleFor(x => x.Description, x => x.Lorem.Sentence())
                  .Generate(5).ToList();
 
             foreach (var item in subjects)
@@ -54,6 +52,13 @@ namespace Plannial.Core.Data
             await context.Subjects.AddRangeAsync(subjects);
             await context.Reminders.AddRangeAsync(reminders);
             await context.SaveChangesAsync();
+        }
+
+        private static Faker<Subject> CreateSubjectGenerator()
+        {
+            return new Faker<Subject>()
+               .RuleFor(x => x.Name, x => x.Name.JobTitle())
+               .RuleFor(x => x.Description, x => x.Lorem.Sentence());
         }
 
         private static Faker<Reminder> CreateReminderGenerator()

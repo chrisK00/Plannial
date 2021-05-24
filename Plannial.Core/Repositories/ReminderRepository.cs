@@ -62,10 +62,10 @@ namespace Plannial.Core.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<IReadOnlyCollection<Reminder>> GetRemindersAsync(string userId, IEnumerable<int> reminderIds)
+        public async Task<IReadOnlyCollection<Reminder>> GetRemindersAsync(string userId, IEnumerable<int> reminderIds, CancellationToken cancellationToken = default)
         {
             return await _context.Reminders.Where(x => x.UserId == userId)
-                .Where(reminder => reminderIds.Contains(reminder.Id)).IgnoreQueryFilters().ToListAsync();
+                .Where(reminder => reminderIds.Contains(reminder.Id)).IgnoreQueryFilters().ToListAsync(cancellationToken);
         }
 
         public void RemoveReminders(IEnumerable<Reminder> reminders)

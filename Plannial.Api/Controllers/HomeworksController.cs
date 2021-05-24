@@ -23,9 +23,9 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveHomework(int id)
+        public async Task<IActionResult> RemoveHomework(int id, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new RemoveHomework.Command(User.GetUserId(), id));
+            await _mediator.Send(new RemoveHomework.Command(User.GetUserId(), id), cancellationToken);
             return NoContent();
         }
 
