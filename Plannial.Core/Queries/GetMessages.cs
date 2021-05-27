@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Mappings;
+using Plannial.Core.Mappers;
 using Plannial.Core.Models.Params;
 using Plannial.Core.Models.Responses;
 
@@ -18,28 +19,27 @@ namespace Plannial.Core.Queries
         {
             private readonly IMessageRepository _messageRepository;
             private readonly IUserRepository _userRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IMessageRepository messageRepository, IUserRepository userRepository)
+            public Handler(IMessageRepository messageRepository, IUserRepository userRepository, IMapper mapper)
             {
                 _messageRepository = messageRepository;
                 _userRepository = userRepository;
+                _mapper = mapper;
             }
 
             public async Task<IEnumerable<MessageResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var messages = await _messageRepository.GetMessagesAsync(request.UserId, request.MessageParams, cancellationToken);
-                var messageResponses = new List<MessageResponse>(messages.Count());
+                var messageResponses = _mapper.Map<IEnumerable<MessageResponse>>(messages);
 
-                foreach (var message in messages)
+                foreach (var message in messageResponses)
                 {
                     var sender =  await _userRepository.GetUserAsync(message.SenderId);
                     var recipient =  await _userRepository.GetUserAsync(message.RecipientId);
 
-                    var messageResponse = MessageMapper.MapToMessageResponse(message);
-                    messageResponse.SenderUsername = recipient.UserName;
-                    messageResponse.RecipientUsername = sender.UserName;
-
-                    messageResponses.Add(messageResponse);
+                    message.SenderUsername = recipient.UserName;
+                    message.RecipientUsername = sender.UserName;
                 }
 
                 return messageResponses;

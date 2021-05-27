@@ -50,7 +50,7 @@ namespace Plannial.Core.Repositories
         {
             var messages = await _context.Messages
                 .Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.SenderId == otherUserId
-                || x.SenderId == userId && !x.SenderDeleted && x.RecipientId == otherUserId).ToListAsync(cancellationToken: cancellationToken);
+                || x.SenderId == userId && !x.SenderDeleted && x.RecipientId == otherUserId).ToListAsync(cancellationToken);
 
             return messages;
         }

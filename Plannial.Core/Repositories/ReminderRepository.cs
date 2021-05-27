@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using Plannial.Core.Data;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
 using Plannial.Core.Models.Params;
-using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Repositories
 {
@@ -31,18 +29,10 @@ namespace Plannial.Core.Repositories
             return await _context.Reminders.FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);
         }
 
-        public async Task<IEnumerable<ReminderResponse>> GetReminderResponsesAsync(string userId, ReminderParams reminderParams,
+        public async Task<IEnumerable<Reminder>> GetRemindersAsync(string userId, ReminderParams reminderParams,
             CancellationToken cancellationToken = default)
         {
-            var query = _context.Reminders.Where(x => x.UserId == userId).Select(reminder => new ReminderResponse
-            {
-                Id = reminder.Id,
-                Priority = reminder.Priority,
-                DeletedDate = reminder.DeletedDate,
-                Description = reminder.Description,
-                DueDate = reminder.DueDate,
-                Name = reminder.Name
-            }).AsNoTracking().AsQueryable();
+            var query = _context.Reminders.Where(x => x.UserId == userId).AsNoTracking().AsQueryable();
 
             query = reminderParams.FilterBy switch
             {
@@ -53,7 +43,6 @@ namespace Plannial.Core.Repositories
 
             query = reminderParams.OrderBy switch
             {
-                "category" => query.OrderBy(x => x.Category),
                 "due" => query.OrderBy(x => x.DueDate),
                 "priority" => query.OrderByDescending(x => x.Priority),
                 _ => query.OrderByDescending(x => x.Priority)

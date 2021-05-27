@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Params;
@@ -19,15 +17,18 @@ namespace Plannial.Core.Queries
         public class Handler : IRequestHandler<Query, IEnumerable<ReminderResponse>>
         {
             private readonly IReminderRepository _reminderRepository;
+            private readonly IMapper _mapper;
 
-            public Handler(IReminderRepository reminderRepository)
+            public Handler(IReminderRepository reminderRepository, IMapper mapper)
             {
                 _reminderRepository = reminderRepository;
+                _mapper = mapper;
             }
 
             public async Task<IEnumerable<ReminderResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _reminderRepository.GetReminderResponsesAsync(request.UserId, request.ReminderParams, cancellationToken);
+                var reminders = await _reminderRepository.GetRemindersAsync(request.UserId, request.ReminderParams, cancellationToken);
+                return _mapper.Map<IEnumerable<ReminderResponse>>(reminders);
             }
         }
     }

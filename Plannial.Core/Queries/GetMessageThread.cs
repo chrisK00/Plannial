@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Mappings;
+using Plannial.Core.Mappers;
 using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Queries
@@ -21,13 +22,16 @@ namespace Plannial.Core.Queries
             private readonly IUserRepository _userRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
+            private readonly IMapper _mapper;
 
-            public Handler(IMessageRepository messageRepository, IUserRepository userRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
+            public Handler(IMessageRepository messageRepository, IUserRepository userRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger,
+                IMapper mapper)
             {
                 _messageRepository = messageRepository;
                 _userRepository = userRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
+                _mapper = mapper;
             }
 
             public async Task<IEnumerable<MessageResponse>> Handle(Query request, CancellationToken cancellationToken)
@@ -43,6 +47,7 @@ namespace Plannial.Core.Queries
                 var user = await _userRepository.GetUserAsync(request.UserId);
 
                 var messageResponses = new List<MessageResponse>(messages.Count());
+
                 foreach (var message in messages)
                 {
                     if (message.DateRead == null && message.RecipientId == request.UserId)
@@ -50,7 +55,7 @@ namespace Plannial.Core.Queries
                         message.DateRead = DateTime.UtcNow;
                     }
 
-                    var messageResponse = MessageMapper.MapToMessageResponse(message);
+                    var messageResponse = _mapper.Map<MessageResponse>(message);
                     messageResponse.SenderUsername = message.SenderId == request.UserId ? user.UserName : otherUser.UserName;
                     messageResponse.RecipientUsername = message.RecipientId == request.UserId ? user.UserName : otherUser.UserName;
 

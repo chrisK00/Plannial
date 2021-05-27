@@ -2,7 +2,7 @@
 using Plannial.Core.Models.Entities;
 using Plannial.Core.Models.Responses;
 
-namespace Plannial.Core.Helpers
+namespace Plannial.Core.Mappers
 {
     public class AutoMapperProfiles : Profile
     {

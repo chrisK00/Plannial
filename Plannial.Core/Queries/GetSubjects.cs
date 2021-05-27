@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -18,17 +17,20 @@ namespace Plannial.Core.Queries
         {
             private readonly ISubjectRepository _subjectRepository;
             private readonly ILogger<Handler> _logger;
+            private readonly IMapper _mapper;
 
-            public Handler(ISubjectRepository subjectRepository, ILogger<Handler> logger)
+            public Handler(ISubjectRepository subjectRepository, ILogger<Handler> logger, IMapper mapper)
             {
                 _subjectRepository = subjectRepository;
                 _logger = logger;
+                _mapper = mapper;
             }
 
-            async Task<IEnumerable<SubjectResponse>> IRequestHandler<Query, IEnumerable<SubjectResponse>>.Handle(Query request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<SubjectResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
                 _logger.LogInformation($"Getting subjects");
-                return await _subjectRepository.GetSubjectResponsesAsync(request.UserId, cancellationToken);
+                var subjects = await _subjectRepository.GetSubjectsAsync(request.UserId, cancellationToken);
+                return _mapper.Map<IEnumerable<SubjectResponse>>(subjects);
             }
         }
     }

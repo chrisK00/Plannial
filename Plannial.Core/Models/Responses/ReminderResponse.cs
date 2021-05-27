@@ -11,7 +11,6 @@ namespace Plannial.Core.Models.Responses
         public string Description { get; set; }
         public DateTime? DueDate { get; set; }
         public Priority Priority { get; set; }
-        public string Category { get; set; }
         public DateTime? DeletedDate { get; set; }
     }
 }
