@@ -46,8 +46,7 @@ namespace Plannial.Core.Commands
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
-                    _logger.LogError($"Failed to update homework {homework.Id}");
-                    throw new DbUpdateException("Failed to update homework");
+                    _logger.LogWarning($"No changes to homework {homework.Id}");
                 }
 
                 return _mapper.Map<HomeworkResponse>(homework);

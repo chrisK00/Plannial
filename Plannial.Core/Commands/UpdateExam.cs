@@ -49,8 +49,7 @@ namespace Plannial.Core.Commands
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
-                    _logger.LogError($"Failed to update exam {exam.Id}");
-                    throw new DbUpdateException("Failed to update exam");
+                    _logger.LogWarning($"No changes to exam {exam.Id}");
                 }
 
                 return _mapper.Map<ExamResponse>(exam);

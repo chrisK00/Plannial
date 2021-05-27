@@ -32,7 +32,7 @@ namespace Plannial.Core.Repositories
             && x.Id == messageId);
         }
 
-        public async Task<IEnumerable<MessageResponse>> GetMessagesAsync(string userId, MessageParams messageParams, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Message>> GetMessagesAsync(string userId, MessageParams messageParams, CancellationToken cancellationToken = default)
         {
             var query = _context.Messages.OrderByDescending(m => m.DateSent).AsNoTracking().AsQueryable();
 
@@ -43,39 +43,16 @@ namespace Plannial.Core.Repositories
                 _ => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.DateRead == null)
             };
 
-            return await query.Select(msg => new MessageResponse
-            {
-                SenderId = msg.SenderId,
-                RecipientId = msg.RecipientId,
-                Content = msg.Content,
-                DateSent = msg.DateSent,
-                DateRead = msg.DateRead,
-                Id = msg.Id
-            }).ToListAsync(cancellationToken);
+            return await query.ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<MessageResponse>> GetMessageThreadAsync(string userId, string otherUserId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Message>> GetMessageThreadAsync(string userId, string otherUserId, CancellationToken cancellationToken = default)
         {
             var messages = await _context.Messages
                 .Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.SenderId == otherUserId
                 || x.SenderId == userId && !x.SenderDeleted && x.RecipientId == otherUserId).ToListAsync(cancellationToken: cancellationToken);
 
-            var unreadMessages = messages.Where(x => x.DateRead == null && x.RecipientId == userId);
-
-            foreach (var message in unreadMessages)
-            {
-                message.DateRead = DateTime.UtcNow;
-            }
-
-            return messages.Select(msg => new MessageResponse
-            {
-                SenderId = msg.SenderId,
-                RecipientId = msg.RecipientId,
-                Content = msg.Content,
-                DateSent = msg.DateSent,
-                DateRead = msg.DateRead,
-                Id = msg.Id
-            }).ToList();
+            return messages;
         }
 
         public void RemoveMessage(Message message)
