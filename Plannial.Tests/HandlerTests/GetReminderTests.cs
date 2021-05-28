@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using Plannial.Core.Helpers;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Mappers;
 using Plannial.Core.Queries;
 using Xunit;
 

@@ -14,19 +14,19 @@ namespace Plannial.Core.Commands.RemoveCommands
 
         public class Handler : IRequestHandler<Command>
         {
-            private readonly ISubjectRepository _subjectRepository;
+            private readonly IHomeworkRepository _homeworkRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(ISubjectRepository subjectRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
+            public Handler(IHomeworkRepository homeworkRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
             {
-                _subjectRepository = subjectRepository;
+                _homeworkRepository = homeworkRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
             }
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var homework = await _subjectRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
+                var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
                 if (homework == null)
                 {
@@ -35,7 +35,7 @@ namespace Plannial.Core.Commands.RemoveCommands
                 }
 
                 _logger.LogInformation($"Removing homework {request}");
-                _subjectRepository.RemoveHomework(homework);
+                _homeworkRepository.RemoveHomework(homework);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {

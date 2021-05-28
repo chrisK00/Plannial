@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Interfaces
 {
@@ -23,10 +25,5 @@ namespace Plannial.Core.Interfaces
         /// <param name="userId"></param>
         /// <returns>A subject including all related entities</returns>
         Task<Subject> GetSubjectByIdAsync(int id, string userId, CancellationToken cancellationToken);
-        void RemoveExam(Exam exam);
-        Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default);
-        void RemoveHomework(Homework homework);
-        Task<Homework> GetHomeworkAsync(int homeworkId, string userId, CancellationToken cancellationToken = default);
-        Task<Grade> GetGradeAsync(string grade, CancellationToken cancellationToken = default);
     }
 }
