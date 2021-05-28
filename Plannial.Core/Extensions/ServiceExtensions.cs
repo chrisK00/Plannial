@@ -22,10 +22,7 @@ namespace Plannial.Core.Extensions
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IReminderRepository, ReminderRepository>();
-            services.AddScoped<IHomeworkRepository, HomeworkRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
-            services.AddScoped<IGradeRepository, GradeRepository>();
-            services.AddScoped<IExamRepository, ExamRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMessageRepository, MessageRepository>();

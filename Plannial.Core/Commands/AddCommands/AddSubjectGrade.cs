@@ -16,14 +16,12 @@ namespace Plannial.Core.Commands.AddCommands
         public class Handler : IRequestHandler<Command>
         {
             private readonly ISubjectRepository _subjectRepository;
-            private readonly IGradeRepository _gradeRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(ISubjectRepository subjectRepository, IGradeRepository gradeRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
+            public Handler(ISubjectRepository subjectRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
             {
                 _subjectRepository = subjectRepository;
-                _gradeRepository = gradeRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
             }
@@ -38,7 +36,7 @@ namespace Plannial.Core.Commands.AddCommands
 
                 if (!string.IsNullOrWhiteSpace(request.Grade))
                 {
-                    var grade = await _gradeRepository.GetGradeAsync(request.Grade, cancellationToken);
+                    var grade = await _subjectRepository.GetGradeAsync(request.Grade, cancellationToken);
                     if (grade == null)
                     {
                         grade = new Grade { Value = request.Grade };

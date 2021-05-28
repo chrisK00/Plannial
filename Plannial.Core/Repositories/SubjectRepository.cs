@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
-using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Repositories
 {
@@ -35,6 +33,31 @@ namespace Plannial.Core.Repositories
         {
             return await _context.Subjects.Include(x => x.Grade)
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId, cancellationToken);
+        }
+
+        public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId, cancellationToken);
+        }
+
+        public void RemoveExam(Exam exam)
+        {
+            _context.Exams.Remove(exam);
+        }
+
+        public async Task<Homework> GetHomeworkAsync(int homeworkId, string userId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Homeworks.FirstOrDefaultAsync(x => x.UserId == userId && x.Id == homeworkId, cancellationToken);
+        }
+
+        public void RemoveHomework(Homework homework)
+        {
+            _context.Homeworks.Remove(homework);
+        }
+
+        public async Task<Grade> GetGradeAsync(string grade, CancellationToken cancellationToken = default)
+        {
+            return await _context.Grades.FirstOrDefaultAsync(x => x.Value == grade.ToUpper(), cancellationToken);
         }
     }
 }

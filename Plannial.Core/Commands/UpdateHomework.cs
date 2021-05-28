@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Responses;
@@ -18,20 +17,20 @@ namespace Plannial.Core.Commands
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
-            private readonly IHomeworkRepository _homeworkRepository;
+            private readonly ISubjectRepository _subjectRepository;
             private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork, ILogger<Handler> logger, IHomeworkRepository homeworkRepository, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork, ILogger<Handler> logger, ISubjectRepository subjectRepository, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _logger = logger;
-                _homeworkRepository = homeworkRepository;
+                _subjectRepository = subjectRepository;
                 _mapper = mapper;
             }
 
             public async Task<HomeworkResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
+                var homework = await _subjectRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
                 if (homework == null)
                 {

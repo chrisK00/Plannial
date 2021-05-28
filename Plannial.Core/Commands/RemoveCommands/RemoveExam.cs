@@ -16,20 +16,20 @@ namespace Plannial.Core.Commands.RemoveCommands
         public class Handler : IRequestHandler<Command>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IExamRepository _examRepository;
+            private readonly ISubjectRepository _subjectRepository;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(IUnitOfWork unitOfWork, IExamRepository examRepository, ILogger<Handler> logger)
+            public Handler(IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger)
             {
                 _unitOfWork = unitOfWork;
-                _examRepository = examRepository;
+                _subjectRepository = subjectRepository;
                 _logger = logger;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
           
-                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
+                var exam = await _subjectRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
 
                 if (exam == null)
                 {
@@ -38,7 +38,7 @@ namespace Plannial.Core.Commands.RemoveCommands
                 }
 
                 _logger.LogInformation($"Removing exam {request}");
-                _examRepository.RemoveExam(exam);
+                _subjectRepository.RemoveExam(exam);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {

@@ -21,20 +21,20 @@ namespace Plannial.Core.Commands
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
-            private readonly IExamRepository _examRepository;
+            private readonly ISubjectRepository _subjectRepository;
             private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork, ILogger<Handler> logger, IExamRepository examRepository, IMapper mapper)
+            public Handler(IUnitOfWork unitOfWork, ILogger<Handler> logger, ISubjectRepository subjectRepository, IMapper mapper)
             {
                 _unitOfWork = unitOfWork;
                 _logger = logger;
-                _examRepository = examRepository;
+                _subjectRepository = subjectRepository;
                 _mapper = mapper;
             }
 
             public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
             {
-                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
+                var exam = await _subjectRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
 
                 if (exam == null)
                 {
