@@ -12,9 +12,9 @@ namespace Plannial.Core.Commands
 {
     public static class UpdateHomework
     {
-        public record Command(int HomeworkId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<HomeworkResponse>;
+        public record Command(int HomeworkId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<HomeworkListResponse>;
 
-        public class Handler : IRequestHandler<Command, HomeworkResponse>
+        public class Handler : IRequestHandler<Command, HomeworkListResponse>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
@@ -29,7 +29,7 @@ namespace Plannial.Core.Commands
                 _mapper = mapper;
             }
 
-            public async Task<HomeworkResponse> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<HomeworkListResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
@@ -49,7 +49,7 @@ namespace Plannial.Core.Commands
                     _logger.LogWarning($"No changes to homework {homework.Id}");
                 }
 
-                return _mapper.Map<HomeworkResponse>(homework);
+                return _mapper.Map<HomeworkListResponse>(homework);
             }
         }
     }

@@ -14,7 +14,8 @@ namespace Plannial.Core.Mappers
 
             CreateMap<Reminder, ReminderResponse>();
             CreateMap<Exam, ExamResponse>();
-            CreateMap<Homework, HomeworkResponse>();
+            CreateMap<Homework, HomeworkListResponse>();
+            CreateMap<Homework, HomeworkDetailResponse>();
             CreateMap<Message, MessageResponse>();
             CreateMap<Reminder, ReminderResponse>();
         }

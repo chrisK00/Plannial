@@ -45,7 +45,7 @@ namespace Plannial.Api.Hubs
             await Clients.Group(groupName).SendAsync("NewMessage", message);
         }
 
-        private string GetGroupName(string userId, string otherUserId)
+        private static string GetGroupName(string userId, string otherUserId)
         {
             //evaluates the values of each char in the strings.
             var userIdIsLessThanOtherUserId = string.CompareOrdinal(userId, otherUserId) < 0;

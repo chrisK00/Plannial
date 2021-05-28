@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Plannial.Core.Interfaces;
-using Plannial.Core.Mappers;
 using Plannial.Core.Models.Params;
 using Plannial.Core.Models.Responses;
 

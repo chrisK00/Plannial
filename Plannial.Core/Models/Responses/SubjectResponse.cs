@@ -8,7 +8,7 @@ namespace Plannial.Core.Models.Responses
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<ExamResponse> Exams { get; set; } = new List<ExamResponse>();
-        public ICollection<HomeworkResponse> Homeworks { get; set; } = new List<HomeworkResponse>();
+        public ICollection<HomeworkListResponse> Homeworks { get; set; } = new List<HomeworkListResponse>();
         public string Grade { get; set; }
     }
 }
