@@ -18,6 +18,11 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
+        public async Task AddHomeworkAsync(Homework homework, CancellationToken cancellationToken)
+        {
+            await _context.Homeworks.AddAsync(homework, cancellationToken);
+        }
+
         public async Task<Homework> GetHomeworkAsync(int homeworkId, string userId, CancellationToken cancellationToken = default)
         {
             return await _context.Homeworks.FirstOrDefaultAsync(x => x.UserId == userId && x.Id == homeworkId, cancellationToken);
@@ -28,7 +33,7 @@ namespace Plannial.Core.Repositories
             var query = _context.Homeworks.Where(x => x.UserId == userId).AsQueryable();
             if (subjectId.HasValue)
             {
-                query.Where(x => x.SubjectId == subjectId);
+               query = query.Where(x => x.SubjectId == subjectId);
             }
 
             return await query.OrderByDescending(x => x.DueDate).ToListAsync(cancellationToken);

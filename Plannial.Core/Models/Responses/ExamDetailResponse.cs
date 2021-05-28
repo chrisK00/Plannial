@@ -2,7 +2,7 @@
 
 namespace Plannial.Core.Models.Responses
 {
-    public class ExamResponse
+    public class ExamDetailResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

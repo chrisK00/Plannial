@@ -14,50 +14,52 @@ namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddExam
     {
-        public record Command(string Name, string Description, DateTime DueDate, int SubjectId, string UserId) : IRequest<ExamResponse>;
+        public record Command(string Name, string Description, DateTime DueDate, int SubjectId, string UserId) : IRequest<ExamDetailResponse>;
 
-        public class Handler : IRequestHandler<Command, ExamResponse>
+        public class Handler : IRequestHandler<Command, ExamDetailResponse>
         {
             private readonly IMapper _mapper;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ISubjectRepository _subjectRepository;
             private readonly ILogger<Handler> _logger;
+            private readonly IExamRepository _examRepository;
 
-            public Handler(IMapper mapper, IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger)
+            public Handler(IMapper mapper, IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger, IExamRepository examRepository)
             {
                 _mapper = mapper;
                 _unitOfWork = unitOfWork;
                 _subjectRepository = subjectRepository;
                 _logger = logger;
+                _examRepository = examRepository;
             }
 
-            public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ExamDetailResponse> Handle(Command request, CancellationToken cancellationToken)
             {
+                if (!await _subjectRepository.SubjectExistsAsync(request.SubjectId, request.UserId, cancellationToken))
+                {
+                    _logger.LogWarning($"User tried to access subject; {request.SubjectId}");
+                    throw new UnauthorizedAccessException("You dont own this item");
+                }
+
                 var exam = new Exam
                 {
                     Name = request.Name,
                     Description = request.Description,
                     DueDate = request.DueDate,
-                    UserId = request.UserId
+                    UserId = request.UserId,
+                    SubjectId = request.SubjectId
                 };
 
-                var subject = await _subjectRepository.GetSubjectByIdAsync(request.SubjectId, request.UserId, cancellationToken);
-
-                if (subject == null)
-                {
-                    _logger.LogWarning($"User tried to access subject: {request.SubjectId}");
-                    throw new UnauthorizedAccessException("You dont own this item");
-                }
-
-                _logger.LogInformation($"Adding exam {request} to subject: {subject.Id}");
-                subject.Exams.Add(exam);
+                _logger.LogInformation($"Adding exam {request} to subject: {request.SubjectId}");
+                await _examRepository.AddExamAsync(exam, cancellationToken);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
                     _logger.LogError("Failed to add exam");
                     throw new DbUpdateException("Failed to add exam");
                 }
-                return _mapper.Map<ExamResponse>(exam);
+
+                return _mapper.Map<ExamDetailResponse>(exam);
             }
         }
     }

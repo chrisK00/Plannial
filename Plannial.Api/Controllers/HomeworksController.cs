@@ -32,11 +32,11 @@ namespace Plannial.Api.Controllers
                 addHomeworkRequest.Name, addHomeworkRequest.Description, addHomeworkRequest.DueDate, addHomeworkRequest.SubjectId, User.GetUserId()),
                 cancellationToken);
 
-            return CreatedAtRoute(nameof(GetHomework), homework, new { homework.Id });
+            return CreatedAtRoute(nameof(GetHomework), new { homework.Id }, homework);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HomeworkListResponse>>> GetHomeworks([FromQuery] int subjectId, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<HomeworkListResponse>>> GetHomeworks([FromQuery] int? subjectId, CancellationToken cancellationToken)
         {
             var homeworks = await _mediator.Send(
                 new GetHomeworks.Query(subjectId, User.GetUserId()), cancellationToken);
@@ -44,10 +44,10 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetHomework))]
-        public async Task<ActionResult<IEnumerable<HomeworkDetailResponse>>> GetHomework(int id)
+        public async Task<ActionResult<HomeworkDetailResponse>> GetHomework(int id)
         {
             var homework = await _mediator.Send(new GetHomework.Query(User.GetUserId(), id));
-            return Ok(homework);
+            return homework;
         }
 
         [HttpDelete("{id}")]

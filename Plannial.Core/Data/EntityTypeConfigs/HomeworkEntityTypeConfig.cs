@@ -18,7 +18,7 @@ namespace Plannial.Core.Data.EntityTypeConfigs
               .WithMany()
               .HasForeignKey(x => x.SubjectId)
               .IsRequired()
-              .OnDelete(DeleteBehavior.Cascade);
+              .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(255)

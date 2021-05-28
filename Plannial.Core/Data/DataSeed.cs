@@ -33,6 +33,7 @@ namespace Plannial.Core.Data
             var subjects = CreateSubjectGenerator()
                  .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
                  .Generate(5).ToList();
+            await context.Subjects.AddRangeAsync(subjects);
 
             foreach (var item in subjects)
             {
@@ -40,16 +41,15 @@ namespace Plannial.Core.Data
                 var homework = CreateHomeworkGenerator().Generate();
 
                 exam.UserId = item.UserId;
+                exam.SubjectId = item.Id;
+                homework.SubjectId = item.Id;
                 homework.UserId = item.UserId;
-                item.Exams.Add(exam);
-                item.Homeworks.Add(homework);
             }
 
             var reminders = CreateReminderGenerator()
                 .RuleFor(x => x.UserId, x => users[x.Random.Number(0, users.Count - 1)].Id)
                 .Generate(5).ToList();
 
-            await context.Subjects.AddRangeAsync(subjects);
             await context.Reminders.AddRangeAsync(reminders);
             await context.SaveChangesAsync();
         }

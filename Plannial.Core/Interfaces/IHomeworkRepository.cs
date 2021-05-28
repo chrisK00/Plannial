@@ -10,5 +10,6 @@ namespace Plannial.Core.Interfaces
         public void RemoveHomework(Homework homework);
         public Task<Homework> GetHomeworkAsync(int homeworkId, string userId, CancellationToken cancellationToken = default);
         Task<IEnumerable<Homework>> GetHomeworksAsync(string userId, int? subjectId, CancellationToken cancellationToken = default);
+        Task AddHomeworkAsync(Homework homework, CancellationToken cancellationToken);
     }
 }

@@ -60,15 +60,6 @@ namespace Plannial.Api.Controllers
             return CreatedAtRoute(nameof(GetSubjects), subject);
         }
 
-        [HttpPost("{subjectId}/add-exam")]
-        public async Task<ActionResult<ExamResponse>> AddExam(AddExamRequest addExamRequest, int subjectId, CancellationToken cancellationToken)
-        {
-            var exam = await _mediator.Send(new AddExam.Command(
-                addExamRequest.Name, addExamRequest.Description, addExamRequest.DueDate, subjectId, User.GetUserId()), cancellationToken);
-
-            return CreatedAtRoute(nameof(GetSubjects), exam);
-        }
-
         /// <summary>
         /// Edits the subject's grade property
         /// </summary>

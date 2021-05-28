@@ -15,6 +15,7 @@ namespace Plannial.Tests.HandlerTests
     public class AddHomeworkTests
     {
         private readonly Mock<ISubjectRepository> _subjectRepository = new();
+        private readonly Mock<IHomeworkRepository> _homeworkRepository = new();
         private readonly Mock<IUnitOfWork> _unitOfWork = new();
         private readonly Mock<ILogger<AddHomework.Handler>> _addHomeworkLogger = new();
         private readonly IMapper _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfiles>()));
@@ -24,7 +25,7 @@ namespace Plannial.Tests.HandlerTests
         public AddHomeworkTests()
         {
             _unitOfWork.Setup(_ => _.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
-            _subject = new AddHomework.Handler(_mapper, _unitOfWork.Object, _subjectRepository.Object, _addHomeworkLogger.Object);
+            _subject = new AddHomework.Handler(_mapper, _unitOfWork.Object, _subjectRepository.Object, _addHomeworkLogger.Object, _homeworkRepository.Object);
         }
 
         [Fact]

@@ -15,9 +15,9 @@ namespace Plannial.Core.Commands
 {
     public static class UpdateExam
     {
-        public record Command(int ExamId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<ExamResponse>;
+        public record Command(int ExamId, string Name, string Description, DateTime DueDate, string UserId) : IRequest<ExamDetailResponse>;
 
-        public class Handler : IRequestHandler<Command, ExamResponse>
+        public class Handler : IRequestHandler<Command, ExamDetailResponse>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
@@ -32,7 +32,7 @@ namespace Plannial.Core.Commands
                 _mapper = mapper;
             }
 
-            public async Task<ExamResponse> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ExamDetailResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
 
@@ -52,7 +52,7 @@ namespace Plannial.Core.Commands
                     _logger.LogWarning($"No changes to exam {exam.Id}");
                 }
 
-                return _mapper.Map<ExamResponse>(exam);
+                return _mapper.Map<ExamDetailResponse>(exam);
             }
         }
     }

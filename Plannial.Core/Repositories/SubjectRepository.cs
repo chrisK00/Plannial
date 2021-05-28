@@ -25,7 +25,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<IEnumerable<Subject>> GetSubjectsAsync(string userId, CancellationToken cancellationToken)
         {
-            return await _context.Subjects.Include(x => x.Exams).Include(x => x.Grade)
+            return await _context.Subjects.Include(x => x.Grade)
                 .Where(x => x.UserId == userId).AsNoTracking().ToListAsync(cancellationToken);
         }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,17 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? examId, CancellationToken cancellationToken = default)
+        {
+            var query = _context.Exams.Where(x => x.UserId == userId).AsQueryable();
+            if (examId.HasValue)
+            {
+                query = query.Where(x => x.SubjectId == examId);
+            }
+
+            return await query.OrderByDescending(x => x.DueDate).ToListAsync(cancellationToken);
+        }
+
         public async Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default)
         {
             return await _context.Exams.FirstOrDefaultAsync(x => x.Id == examId && x.UserId == userId, cancellationToken);
@@ -25,6 +38,11 @@ namespace Plannial.Core.Repositories
         public void RemoveExam(Exam exam)
         {
             _context.Exams.Remove(exam);
+        }
+
+        public async Task AddExamAsync(Exam exam, CancellationToken cancellationToken)
+        {
+            await _context.AddAsync(exam, cancellationToken);
         }
     }
 }

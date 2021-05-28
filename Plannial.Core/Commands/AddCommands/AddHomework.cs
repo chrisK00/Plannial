@@ -21,13 +21,16 @@ namespace Plannial.Core.Commands.AddCommands
             private readonly IUnitOfWork _unitOfWork;
             private readonly ISubjectRepository _subjectRepository;
             private readonly ILogger<Handler> _logger;
+            private readonly IHomeworkRepository _homeworkRepository;
 
-            public Handler(IMapper mapper,IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger)
+            public Handler(IMapper mapper,IUnitOfWork unitOfWork, ISubjectRepository subjectRepository, ILogger<Handler> logger,
+                IHomeworkRepository homeworkRepository)
             {
                 _mapper = mapper;
                 _unitOfWork = unitOfWork;
                 _subjectRepository = subjectRepository;
                 _logger = logger;
+                _homeworkRepository = homeworkRepository;
             }
 
             public async Task<HomeworkDetailResponse> Handle(Command request, CancellationToken cancellationToken)
@@ -47,6 +50,8 @@ namespace Plannial.Core.Commands.AddCommands
                     UserId = request.UserId,
                     SubjectId = request.SubjectId
                 };
+
+                await _homeworkRepository.AddHomeworkAsync(homework, cancellationToken);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {

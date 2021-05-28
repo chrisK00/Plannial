@@ -13,7 +13,8 @@ namespace Plannial.Core.Mappers
                 opt => opt.MapFrom(src => src.Grade.Value));
 
             CreateMap<Reminder, ReminderResponse>();
-            CreateMap<Exam, ExamResponse>();
+            CreateMap<Exam, ExamDetailResponse>();
+            CreateMap<Exam, ExamListResponse>();
             CreateMap<Homework, HomeworkListResponse>();
             CreateMap<Homework, HomeworkDetailResponse>();
             CreateMap<Message, MessageResponse>();
