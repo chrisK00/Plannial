@@ -32,7 +32,7 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReminderResponse>>> GetReminders(ReminderParams reminderParams, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<ReminderResponse>>> GetReminders([FromQuery]ReminderParams reminderParams, CancellationToken cancellationToken)
         {
             var reminders = await _mediator.Send(new GetReminders.Query(User.GetUserId(), reminderParams), cancellationToken);
             return Ok(reminders);

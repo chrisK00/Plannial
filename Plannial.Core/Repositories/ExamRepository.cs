@@ -21,7 +21,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? examId, CancellationToken cancellationToken = default)
         {
-            var query = _context.Exams.Where(x => x.UserId == userId).AsQueryable();
+            var query = _context.Exams.Where(x => x.UserId == userId).AsNoTracking().AsQueryable();
             if (examId.HasValue)
             {
                 query = query.Where(x => x.SubjectId == examId);

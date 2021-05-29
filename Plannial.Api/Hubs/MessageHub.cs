@@ -29,16 +29,13 @@ namespace Plannial.Api.Hubs
             await Clients.Group(groupName).SendAsync("MessageThread", messages);
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
-        {
-            return base.OnDisconnectedAsync(exception);
-        }
+      
 
         public async Task AddMessage(AddMessageRequest addMessageRequest)
         {
             var message = await _mediator.Send(
               new AddMessage.Command(Context.User.GetUserId(), addMessageRequest.RecipientEmail, addMessageRequest.Content));
-            var groupName = GetGroupName(Context.User.GetUserId(), addMessageRequest.RecipientEmail);
+            var groupName = GetGroupName(Context.User.GetUserEmail(), addMessageRequest.RecipientEmail);
 
             await Clients.Group(groupName).SendAsync("NewMessage", message);
         }

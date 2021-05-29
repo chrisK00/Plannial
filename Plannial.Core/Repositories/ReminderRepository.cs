@@ -37,7 +37,7 @@ namespace Plannial.Core.Repositories
             query = reminderParams.FilterBy switch
             {
                 "due" => query.Where(x => x.DueDate <= DateTime.UtcNow),
-                "removed" => query.IgnoreQueryFilters(),
+                "removed" => query.IgnoreQueryFilters().Where(x => x.DeletedDate != null),
                 _ => query
             };
 

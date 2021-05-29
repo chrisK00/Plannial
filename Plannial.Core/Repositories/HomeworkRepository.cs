@@ -30,7 +30,7 @@ namespace Plannial.Core.Repositories
 
         public async Task<IEnumerable<Homework>> GetHomeworksAsync(string userId, int? subjectId, CancellationToken cancellationToken = default)
         {
-            var query = _context.Homeworks.Where(x => x.UserId == userId).AsQueryable();
+            var query = _context.Homeworks.Where(x => x.UserId == userId).AsNoTracking().AsQueryable();
             if (subjectId.HasValue)
             {
                query = query.Where(x => x.SubjectId == subjectId);

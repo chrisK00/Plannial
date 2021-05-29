@@ -38,13 +38,13 @@ export class MessageService {
     })
   }
 
+
   stopHubConnection() {
     this.hubConnection.stop();
+    console.log('Stopped hub connection');
   }
 
   async send(recipientEmail: string, content: string) {
-    console.log(recipientEmail);
-    console.log(content);
     return this.hubConnection.invoke('AddMessage', { recipientEmail, content })
       .catch(e => console.log(e));
   }

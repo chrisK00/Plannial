@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Plannial.Core.Extensions
 {
@@ -10,5 +9,9 @@ namespace Plannial.Core.Extensions
             return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
+        public static string GetUserEmail(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
+        }
     }
 }

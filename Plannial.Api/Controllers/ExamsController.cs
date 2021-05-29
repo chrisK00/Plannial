@@ -57,10 +57,10 @@ namespace Plannial.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ExamListResponse>>> GetExams([FromQuery] int? examId, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<ExamListResponse>>> GetExams([FromQuery] int? subjectId, CancellationToken cancellationToken)
         {
             var exams = await _mediator.Send(
-                new GetExams.Query(examId, User.GetUserId()), cancellationToken);
+                new GetExams.Query(subjectId, User.GetUserId()), cancellationToken);
             return Ok(exams);
         }
     }
