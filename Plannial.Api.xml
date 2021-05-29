@@ -28,7 +28,7 @@
             <response code="201">Returns the newly created item</response>
             <response code="400">In case of validation errors or if the database was not able to add the item</response>
         </member>
-        <member name="M:Plannial.Api.Controllers.SubjectsController.AddSubjectGrade(Plannial.Core.Models.Requests.AddSubjectGradeRequest,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:Plannial.Api.Controllers.SubjectsController.AddSubjectGrade(Plannial.Core.Models.Requests.AddGradeRequest,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Edits the subject's grade property
             </summary>
@@ -45,7 +45,7 @@
                     grade:"A"   
                 }
             </remarks>
-            <param name="addSubjectGradeRequest"></param>
+            <param name="addGradeRequest"></param>
             <param name="subjectId"></param>
             <param name="cancellationToken"></param>
             <returns></returns>

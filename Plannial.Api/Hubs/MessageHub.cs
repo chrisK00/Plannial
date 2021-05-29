@@ -21,15 +21,13 @@ namespace Plannial.Api.Hubs
         public override async Task OnConnectedAsync()
         {
             var otherUserEmail = Context.GetHttpContext().Request.Query["user"].ToString();
-            var groupName = GetGroupName(Context.User.GetUserId(), otherUserEmail);
+            var groupName = GetGroupName(Context.User.GetUserEmail(), otherUserEmail);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
             var messages = await _mediator.Send(new GetMessageThread.Query(Context.User.GetUserId(), otherUserEmail));
 
             await Clients.Group(groupName).SendAsync("MessageThread", messages);
         }
-
-      
 
         public async Task AddMessage(AddMessageRequest addMessageRequest)
         {

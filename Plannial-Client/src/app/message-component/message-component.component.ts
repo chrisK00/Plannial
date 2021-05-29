@@ -25,8 +25,8 @@ export class MessageComponentComponent implements OnInit {
   }
 
   connect() {
+    this.messageService.stopHubConnection();
     this.messageService.createHubConnection(this.user, this.recipientEmail);
-
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
@@ -21,30 +21,32 @@ export class MessageService {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.messageHubUrl + '?user=' + otherUserId, {
         accessTokenFactory: () => user.token
-      }).withAutomaticReconnect().build();
+      }).withAutomaticReconnect().configureLogging(LogLevel.Information).build();
 
     this.hubConnection.start().catch(e => console.log(e));
 
     this.hubConnection.on('MessageThread', messages => {
       console.log(messages);
       this.messageThreadSource.next(messages);
-    })
+    });
 
     this.hubConnection.on('NewMessage', message => {
       console.log(message);
       this.messageThread$.pipe(take(1)).subscribe(messages => {
         this.messageThreadSource.next([...messages, message]);
-      })
-    })
+      });
+    });
   }
 
-
   stopHubConnection() {
-    this.hubConnection.stop();
-    console.log('Stopped hub connection');
+    if (this.hubConnection?.connectionId) {
+      this.hubConnection.stop();
+      console.log('Stopped hub connection');
+    }
   }
 
   async send(recipientEmail: string, content: string) {
+    console.log(content);
     return this.hubConnection.invoke('AddMessage', { recipientEmail, content })
       .catch(e => console.log(e));
   }
