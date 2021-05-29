@@ -9,5 +9,5 @@ namespace Plannial.Core.Models.Requests
     public record AddReminderRequest(string Name, string Description, DateTime? DueDate, Priority Priority);
     public record AddSubjectRequest(string Name, string Description);
     public record AddMessageRequest(string RecipientEmail, string Content);
-    public record AddSubjectGradeRequest(string Grade);
+    public record AddGradeRequest(string Grade, DateTime DateSet, string Note);
 }

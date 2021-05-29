@@ -22,7 +22,6 @@ namespace Plannial.Core.Data
         {
             base.OnModelCreating(builder);
 
-            new GradeEntityTypeConfig().Configure(builder.Entity<Grade>());
             new SubjectEntityTypeConfig().Configure(builder.Entity<Subject>());
             new ExamEntityTypeConfig().Configure(builder.Entity<Exam>());
             new HomeworkEntityTypeConfig().Configure(builder.Entity<Homework>());

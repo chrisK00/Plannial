@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,19 +12,17 @@ namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddSubjectGrade
     {
-        public record Command(string UserId, int SubjectId, string Grade) : IRequest;
+        public record Command(string UserId, int SubjectId, string Grade, DateTime DateSet, string Note) : IRequest;
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly ISubjectRepository _subjectRepository;
-            private readonly IGradeRepository _gradeRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
 
-            public Handler(ISubjectRepository subjectRepository, IGradeRepository gradeRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
+            public Handler(ISubjectRepository subjectRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
             {
                 _subjectRepository = subjectRepository;
-                _gradeRepository = gradeRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
             }
@@ -36,20 +35,7 @@ namespace Plannial.Core.Commands.AddCommands
                     throw new KeyNotFoundException("Could not find subject");
                 }
 
-                if (!string.IsNullOrWhiteSpace(request.Grade))
-                {
-                    var grade = await _gradeRepository.GetGradeAsync(request.Grade, cancellationToken);
-                    if (grade == null)
-                    {
-                        grade = new Grade { Value = request.Grade };
-                    }
-
-                    subject.Grade = grade;
-                }
-                else
-                {
-                    subject.Grade = null;
-                }
+                subject.Grade = new Grade(request.Grade, request.DateSet, request.Note);
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {

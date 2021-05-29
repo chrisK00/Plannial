@@ -1,16 +1,25 @@
-﻿namespace Plannial.Core.Models.Entities
+﻿using System;
+
+namespace Plannial.Core.Models.Entities
 {
+    /// <summary>
+    /// Value object
+    /// </summary>
     public class Grade
     {
-        private string _value;
-
-        public int Id { get; set; }
-        public string Value
+        public string Value { get; }
+        public DateTime DateSet { get; }
+        public string Note { get; }
+        public Grade(string value, DateTime dateSet, string note)
         {
-            get => _value; set
-            {
-                _value = value.ToUpper();
-            }
+            Value = value;
+            DateSet = dateSet;
+            Note = note;
         }
+
+        /// <summary>
+        /// For EF
+        /// </summary>
+        private Grade() { }
     }
 }

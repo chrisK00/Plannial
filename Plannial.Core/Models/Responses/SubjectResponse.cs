@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Models.Responses
 {
@@ -7,6 +7,6 @@ namespace Plannial.Core.Models.Responses
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Grade { get; set; }
+        public Grade Grade { get; set; }
     }
 }

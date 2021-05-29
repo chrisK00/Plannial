@@ -76,7 +76,7 @@ namespace Plannial.Api.Controllers
         ///         grade:"A"   
         ///     }
         /// </remarks>
-        /// <param name="addSubjectGradeRequest"></param>
+        /// <param name="addGradeRequest"></param>
         /// <param name="subjectId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -85,9 +85,12 @@ namespace Plannial.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("{subjectId}/grade")]
-        public async Task<ActionResult> AddSubjectGrade(AddSubjectGradeRequest addSubjectGradeRequest, int subjectId, CancellationToken cancellationToken)
+        public async Task<ActionResult> AddSubjectGrade(AddGradeRequest addGradeRequest, int subjectId, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new AddSubjectGrade.Command(User.GetUserId(), subjectId, addSubjectGradeRequest.Grade), cancellationToken);
+            await _mediator.Send(
+                new AddSubjectGrade.Command(User.GetUserId(), subjectId, addGradeRequest.Grade, addGradeRequest.DateSet, addGradeRequest.Note)
+                , cancellationToken);
+
             return NoContent();
         }
     }

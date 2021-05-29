@@ -10,8 +10,8 @@ using Plannial.Core.Data;
 namespace Plannial.Core.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210528145810_TwoAggregatesHomeworkAndExam")]
-    partial class TwoAggregatesHomeworkAndExam
+    [Migration("20210529181353_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,22 +254,6 @@ namespace Plannial.Core.Data.Migrations
                     b.ToTable("Exams");
                 });
 
-            modelBuilder.Entity("Plannial.Core.Models.Entities.Grade", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Value")
-                        .HasMaxLength(1)
-                        .HasColumnType("char(1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Grades");
-                });
-
             modelBuilder.Entity("Plannial.Core.Models.Entities.Homework", b =>
                 {
                     b.Property<int>("Id")
@@ -399,9 +383,6 @@ namespace Plannial.Core.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GradeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -412,8 +393,6 @@ namespace Plannial.Core.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GradeId");
 
                     b.HasIndex("UserId");
 
@@ -527,15 +506,33 @@ namespace Plannial.Core.Data.Migrations
 
             modelBuilder.Entity("Plannial.Core.Models.Entities.Subject", b =>
                 {
-                    b.HasOne("Plannial.Core.Models.Entities.Grade", "Grade")
-                        .WithMany()
-                        .HasForeignKey("GradeId");
-
                     b.HasOne("Plannial.Core.Models.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("Plannial.Core.Models.Entities.Grade", "Grade", b1 =>
+                        {
+                            b1.Property<int>("SubjectId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Note")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("nvarchar(3)");
+
+                            b1.HasKey("SubjectId");
+
+                            b1.ToTable("Grades");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SubjectId");
+                        });
 
                     b.Navigation("Grade");
                 });
