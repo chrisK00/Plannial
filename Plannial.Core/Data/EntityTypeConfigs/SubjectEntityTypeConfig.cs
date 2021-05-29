@@ -23,6 +23,9 @@ namespace Plannial.Core.Data.EntityTypeConfigs
 
             builder.OwnsOne(x => x.Grade)
                 .Property(x => x.Note).HasMaxLength(255);
+
+            builder.OwnsOne(x => x.Grade)
+            .Property(x => x.DateSet).IsRequired();
         }
     }
 }

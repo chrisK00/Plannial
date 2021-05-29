@@ -30,16 +30,10 @@
         </member>
         <member name="M:Plannial.Api.Controllers.SubjectsController.AddSubjectGrade(Plannial.Core.Models.Requests.AddGradeRequest,System.Int32,System.Threading.CancellationToken)">
             <summary>
-            Edits the subject's grade property
+            Adds a grade to a subject
             </summary>
             <remarks>
-            Sample request:
-            
-                POST /Subject/grade
-                {
-                    grade:""   
-                }
-                
+            Sample request:  
                 POST /Subject/grade
                 {
                     grade:"A"   

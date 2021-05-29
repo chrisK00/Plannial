@@ -40,7 +40,7 @@ namespace Plannial.Core.Commands.AddCommands
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
                     _logger.LogError($"Failed to apply grade in request: {request}");
-                    throw new DbUpdateException("Failed to edit grade");
+                    throw new DbUpdateException("Failed to add grade");
                 }
 
                 return Unit.Value;

@@ -21,8 +21,8 @@ namespace Plannial.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = nameof(GetSubjects))]
-        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects(CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<SubjectListResponse>>> GetSubjects(CancellationToken cancellationToken)
         {
             var subjects = await _mediator.Send(new GetSubjects.Query(User.GetUserId()), cancellationToken);
             return Ok(subjects);
@@ -53,24 +53,18 @@ namespace Plannial.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<SubjectResponse>> AddSubject(AddSubjectRequest addSubjectRequest, CancellationToken cancellationToken)
+        public async Task<ActionResult<SubjectListResponse>> AddSubject(AddSubjectRequest addSubjectRequest, CancellationToken cancellationToken)
         {
             var subject = await _mediator.Send(new AddSubject.Command(
                 addSubjectRequest.Name, addSubjectRequest.Description, User.GetUserId()), cancellationToken);
-            return CreatedAtRoute(nameof(GetSubjects), subject);
+            return CreatedAtRoute(nameof(GetSubject), new { SubjectId = subject.Id }, subject);
         }
 
         /// <summary>
-        /// Edits the subject's grade property
+        /// Adds a grade to a subject
         /// </summary>
         /// <remarks>
-        /// Sample request:
-        /// 
-        ///     POST /Subject/grade
-        ///     {
-        ///         grade:""   
-        ///     }
-        ///     
+        /// Sample request:  
         ///     POST /Subject/grade
         ///     {
         ///         grade:"A"   
@@ -92,6 +86,13 @@ namespace Plannial.Api.Controllers
                 , cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("{subjectId}", Name = nameof(GetSubject))]
+        public async Task<ActionResult<SubjectDetailResponse>> GetSubject(int subjectId, CancellationToken cancellationToken)
+        {
+            var subject = await _mediator.Send(new GetSubject.Query(User.GetUserId(), subjectId), cancellationToken);
+            return subject;
         }
     }
 }

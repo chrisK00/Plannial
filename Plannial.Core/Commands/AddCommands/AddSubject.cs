@@ -13,9 +13,9 @@ namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddSubject
     {
-        public record Command(string Name, string Description, string UserId) : IRequest<SubjectResponse>;
+        public record Command(string Name, string Description, string UserId) : IRequest<SubjectListResponse>;
 
-        public class Handler : IRequestHandler<Command, SubjectResponse>
+        public class Handler : IRequestHandler<Command, SubjectListResponse>
         {
             private readonly IMapper _mapper;
             private readonly ISubjectRepository _subjectRepository;
@@ -30,7 +30,7 @@ namespace Plannial.Core.Commands.AddCommands
                 _logger = logger;
             }
 
-            public async Task<SubjectResponse> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<SubjectListResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 _logger.LogInformation($"Creating new subject: {request}");
 
@@ -49,7 +49,7 @@ namespace Plannial.Core.Commands.AddCommands
                     throw new DbUpdateException("Failed to create subject");
                 }
 
-                return _mapper.Map<SubjectResponse>(subject);
+                return _mapper.Map<SubjectListResponse>(subject);
             }
         }
     }
