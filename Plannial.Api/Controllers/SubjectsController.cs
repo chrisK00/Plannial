@@ -79,13 +79,12 @@ namespace Plannial.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("{subjectId}/grade")]
-        public async Task<ActionResult> AddSubjectGrade(AddGradeRequest addGradeRequest, int subjectId, CancellationToken cancellationToken)
+        public async Task<ActionResult<SubjectDetailResponse>> AddSubjectGrade(AddGradeRequest addGradeRequest, int subjectId, CancellationToken cancellationToken)
         {
-            await _mediator.Send(
-                new AddSubjectGrade.Command(User.GetUserId(), subjectId, addGradeRequest.Grade, addGradeRequest.DateSet, addGradeRequest.Note)
-                , cancellationToken);
+            var subject = await _mediator.Send(new AddSubjectGrade.Command(
+                  User.GetUserId(), subjectId, addGradeRequest.Grade, addGradeRequest.DateSet, addGradeRequest.Note), cancellationToken);
 
-            return NoContent();
+            return subject;
         }
 
         [HttpGet("{subjectId}", Name = nameof(GetSubject))]

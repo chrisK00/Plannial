@@ -2,32 +2,36 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Plannial.Core.Interfaces;
 using Plannial.Core.Models.Entities;
+using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddSubjectGrade
     {
-        public record Command(string UserId, int SubjectId, string Grade, DateTime DateSet, string Note) : IRequest;
+        public record Command(string UserId, int SubjectId, string Grade, DateTime DateSet, string Note) : IRequest<SubjectDetailResponse>;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, SubjectDetailResponse>
         {
             private readonly ISubjectRepository _subjectRepository;
             private readonly IUnitOfWork _unitOfWork;
             private readonly ILogger<Handler> _logger;
+            private readonly IMapper _mapper;
 
-            public Handler(ISubjectRepository subjectRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger)
+            public Handler(ISubjectRepository subjectRepository, IUnitOfWork unitOfWork, ILogger<Handler> logger, IMapper mapper)
             {
                 _subjectRepository = subjectRepository;
                 _unitOfWork = unitOfWork;
                 _logger = logger;
+                _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<SubjectDetailResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var subject = await _subjectRepository.GetSubjectByIdAsync(request.SubjectId, request.UserId, cancellationToken);
                 if (subject == null)
@@ -43,7 +47,7 @@ namespace Plannial.Core.Commands.AddCommands
                     throw new DbUpdateException("Failed to add grade");
                 }
 
-                return Unit.Value;
+                return _mapper.Map<SubjectDetailResponse>(subject);
             }
         }
 
