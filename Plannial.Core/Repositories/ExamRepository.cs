@@ -19,12 +19,12 @@ namespace Plannial.Core.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? examId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? subjectId, CancellationToken cancellationToken = default)
         {
             var query = _context.Exams.Where(x => x.UserId == userId).AsNoTracking().AsQueryable();
-            if (examId.HasValue)
+            if (subjectId.HasValue)
             {
-                query = query.Where(x => x.SubjectId == examId);
+                query = query.Where(x => x.SubjectId == subjectId);
             }
 
             return await query.OrderByDescending(x => x.DueDate).ToListAsync(cancellationToken);

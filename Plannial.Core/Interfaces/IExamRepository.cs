@@ -9,7 +9,7 @@ namespace Plannial.Core.Interfaces
     {
         public void RemoveExam(Exam exam);
         public Task<Exam> GetExamAsync(int examId, string userId, CancellationToken cancellationToken = default);
-        Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? examId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Exam>> GetExamsAsync(string userId, int? subjectId, CancellationToken cancellationToken = default);
         Task AddExamAsync(Exam exam, CancellationToken cancellationToken);
     }
 }

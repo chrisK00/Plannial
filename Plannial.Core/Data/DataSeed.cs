@@ -54,21 +54,21 @@ namespace Plannial.Core.Data
             await context.SaveChangesAsync();
         }
 
-        private static Faker<Subject> CreateSubjectGenerator()
+        public static Faker<Subject> CreateSubjectGenerator()
         {
             return new Faker<Subject>()
                .RuleFor(x => x.Name, x => x.Name.JobTitle())
                .RuleFor(x => x.Description, x => x.Lorem.Sentence());
         }
 
-        private static Faker<Reminder> CreateReminderGenerator()
+        public static Faker<Reminder> CreateReminderGenerator()
         {
             return new Faker<Reminder>()
                 .RuleFor(x => x.Name, x => x.Lorem.Sentence())
                 .RuleFor(x => x.Priority, x => x.Random.Enum<Priority>());
         }
 
-        private static Faker<Exam> CreateExamGenerator()
+        public static Faker<Exam> CreateExamGenerator()
         {
             return new Faker<Exam>()
                  .RuleFor(x => x.Name, x => x.Name.JobTitle())
@@ -76,7 +76,7 @@ namespace Plannial.Core.Data
                  .RuleFor(x => x.DueDate, x => x.Date.Future());
         }
 
-        private static Faker<Homework> CreateHomeworkGenerator()
+        public static Faker<Homework> CreateHomeworkGenerator()
         {
             return new Faker<Homework>()
                 .RuleFor(x => x.Name, x => x.Name.JobTitle())
