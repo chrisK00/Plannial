@@ -10,8 +10,9 @@ using Xunit;
 
 namespace Plannial.Tests.RepositoryTests
 {
-    public class ExamRepositoryTests
+    public class ExamRepositoryTests : IDisposable
     {
+        private readonly DataContext _context;
         private readonly string _userId = Guid.NewGuid().ToString();
         private readonly int _subjectId = 1;
         private readonly int _examId;
@@ -21,8 +22,8 @@ namespace Plannial.Tests.RepositoryTests
         public ExamRepositoryTests()
         {
             var contextOptions = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase("exams");
-            var context = new DataContext(contextOptions.Options);
-            _subject = new ExamRepository(context);
+            _context = new DataContext(contextOptions.Options);
+            _subject = new ExamRepository(_context);
 
             //random exams
             var exams = DataSeed.CreateExamGenerator()
@@ -36,17 +37,23 @@ namespace Plannial.Tests.RepositoryTests
                 .RuleFor(x => x.SubjectId, _subjectId)
                 .Generate(5);
 
-            context.Exams.AddRange(exams);
-            context.Exams.AddRange(userExams);
-            context.SaveChanges();
+            _context.Exams.AddRange(exams);
+            _context.Exams.AddRange(userExams);
+            _context.SaveChanges();
 
             _examId = userExams.FirstOrDefault().Id;
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         [Fact]
         public async Task GetExam_ReturnsExam_When_Exists()
         {
             var exam = await _subject.GetExamAsync(_examId, _userId);
+
             exam.Should().NotBeNull();
             exam.UserId.Should().Be(_userId);
         }

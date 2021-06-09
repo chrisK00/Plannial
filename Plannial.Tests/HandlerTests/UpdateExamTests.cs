@@ -56,6 +56,8 @@ namespace Plannial.Tests.HandlerTests
             updatedExam.Name.Should().BeEquivalentTo(command.Name);
             updatedExam.Description.Should().BeEquivalentTo(command.Description);
             updatedExam.DueDate.Should().Be(command.DueDate);
+
+            _examRepository.Verify(_ => _.GetExamAsync(command.ExamId, command.UserId, default), Times.Once);
         }
     }
 }
