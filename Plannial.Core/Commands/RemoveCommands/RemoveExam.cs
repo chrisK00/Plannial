@@ -13,7 +13,7 @@ namespace Plannial.Core.Commands.RemoveCommands
     {
         public record Command(int ExamId, string UserId) : IRequest;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IExamRepository _examRepository;
@@ -26,9 +26,8 @@ namespace Plannial.Core.Commands.RemoveCommands
                 _logger = logger;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
-          
                 var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
 
                 if (exam == null)
@@ -45,8 +44,6 @@ namespace Plannial.Core.Commands.RemoveCommands
                     _logger.LogError("Failed to remove exam");
                     throw new DbUpdateException("Failed to remove exam");
                 }
-
-                return Unit.Value;
             }
         }
     }

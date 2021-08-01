@@ -10,7 +10,7 @@ namespace Plannial.Core.Commands
     {
         public record Command(string Email, string Password) : IRequest;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly IUserRepository _userRepository;
 
@@ -19,13 +19,11 @@ namespace Plannial.Core.Commands
                 _userRepository = userRepository;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = new AppUser { Email = request.Email, UserName = request.Email };
 
                 await _userRepository.AddUserAsync(user, request.Password);
-
-                return Unit.Value;
             }
         }
     }

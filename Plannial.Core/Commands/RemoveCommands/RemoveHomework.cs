@@ -12,7 +12,7 @@ namespace Plannial.Core.Commands.RemoveCommands
     {
         public record Command(string UserId, int HomeworkId) : IRequest;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly IHomeworkRepository _homeworkRepository;
             private readonly IUnitOfWork _unitOfWork;
@@ -24,7 +24,8 @@ namespace Plannial.Core.Commands.RemoveCommands
                 _unitOfWork = unitOfWork;
                 _logger = logger;
             }
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+
+            protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var homework = await _homeworkRepository.GetHomeworkAsync(request.HomeworkId, request.UserId, cancellationToken);
 
@@ -42,9 +43,6 @@ namespace Plannial.Core.Commands.RemoveCommands
                     _logger.LogError("Failed to remove homework");
                     throw new DbUpdateException("Failed to remove homework");
                 }
-
-                return Unit.Value;
-
             }
         }
     }

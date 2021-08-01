@@ -15,7 +15,7 @@ namespace Plannial.Core.Commands.RemoveCommands
     {
         public record Command(int MessageId, string UserId) : IRequest;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly IMessageRepository _messageRepository;
             private readonly ILogger<Handler> _logger;
@@ -28,7 +28,7 @@ namespace Plannial.Core.Commands.RemoveCommands
                 _unitOfWork = unitOfWork;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var message = await _messageRepository.GetMessage(request.MessageId, request.UserId);
 
@@ -57,10 +57,7 @@ namespace Plannial.Core.Commands.RemoveCommands
                     _logger.LogError($"Failed to update message {message.Id} with the incoming request {request}");
                     throw new DbUpdateException("Failed to save changes");
                 }
-
-                return Unit.Value;
             }
         }
-
     }
 }

@@ -47,6 +47,7 @@ namespace Plannial.Tests.RepositoryTests
         public void Dispose()
         {
             _context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

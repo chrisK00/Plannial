@@ -16,7 +16,7 @@ namespace Plannial.Core.Commands.RemoveCommands
     {
         public record Command(string UserId, IEnumerable<int> ReminderIds) : IRequest;
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly IUnitOfWork _unitOfWork;
             private readonly IReminderRepository _reminderRepository;
@@ -29,7 +29,7 @@ namespace Plannial.Core.Commands.RemoveCommands
                 _logger = logger;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var reminders = await _reminderRepository.GetRemindersAsync(request.UserId, request.ReminderIds);
                 ICollection<Reminder> remindersToRemove = new List<Reminder>();
@@ -64,8 +64,6 @@ namespace Plannial.Core.Commands.RemoveCommands
                 {
                     throw new DbUpdateException("Failed to remove reminders");
                 }
-
-                return Unit.Value;
             }
         }
     }
