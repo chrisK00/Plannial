@@ -29,10 +29,8 @@ namespace Plannial.Core.Commands
             public async Task<UserResponse> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetUserByEmailAsync(request.Email);
-                if (user == null)
-                {
-                    throw new InvalidOperationException("Failed to login");
-                }
+
+                _ = user ?? throw new InvalidOperationException("Failed to login");
 
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 

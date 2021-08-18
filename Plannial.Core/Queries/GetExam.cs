@@ -24,8 +24,8 @@ namespace Plannial.Core.Queries
 
             public async Task<ExamDetailResponse> Handle(Query request, CancellationToken cancellationToken)
             {
-                var homework = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
-                return _mapper.Map<ExamDetailResponse>(homework);
+                var exam = await _examRepository.GetExamAsync(request.ExamId, request.UserId, cancellationToken);
+                return _mapper.Map<ExamDetailResponse>(exam);
             }
         }
     }

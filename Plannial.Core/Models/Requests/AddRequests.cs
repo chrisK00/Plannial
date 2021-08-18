@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Plannial.Core.Helpers;
 using Plannial.Core.Models.Entities;
 

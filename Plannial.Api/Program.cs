@@ -9,7 +9,6 @@ using Plannial.Core.Data;
 using Plannial.Core.Models.Entities;
 using Serilog;
 using Serilog.Events;
-using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.SystemConsole.Themes;
 
