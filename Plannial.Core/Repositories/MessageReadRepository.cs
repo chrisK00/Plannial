@@ -31,6 +31,9 @@ namespace Plannial.Core.Repositories
                 _ => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.DateRead == null)
             };
 
+            // TODO: paginate
+            var messages = await query.ToListAsync(cancellationToken);
+
             var relatedSenders = await _context.Users
                 .Where(u => query.Select(m => m.SenderId).Contains(u.Id))
                 .Select(x => new { x.UserName, x.Id })
@@ -40,8 +43,6 @@ namespace Plannial.Core.Repositories
                 .Where(u => query.Select(m => m.RecipientId).Contains(u.Id))
                 .Select(x => new { x.UserName, x.Id })
                 .ToListAsync(cancellationToken);
-
-            var messages = await query.ToListAsync(cancellationToken);
 
             return messages.Select(m => new MessageResponse
             {
