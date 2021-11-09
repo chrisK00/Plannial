@@ -24,21 +24,22 @@ namespace Plannial.Core.Repositories
         {
             var query = _context.Messages.OrderByDescending(m => m.DateSent).AsNoTracking();
 
-            var relatedSenders = await _context.Users
-                .Where(u => query.Select(m => m.SenderId).Contains(u.Id))
-                .Select(x => new { x.UserName, x.Id })
-                .ToListAsync(cancellationToken);
-            var relatedRecipients = await _context.Users
-                .Where(u => query.Select(m => m.RecipientId).Contains(u.Id))
-                .Select(x => new { x.UserName, x.Id })
-                .ToListAsync(cancellationToken);
-
             query = messageParams.FilterBy switch
             {
                 "Inbox" => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted),
                 "Outbox" => query.Where(x => x.SenderId == userId && !x.SenderDeleted),
                 _ => query.Where(x => x.RecipientId == userId && !x.RecipientDeleted && x.DateRead == null)
             };
+
+            var relatedSenders = await _context.Users
+                .Where(u => query.Select(m => m.SenderId).Contains(u.Id))
+                .Select(x => new { x.UserName, x.Id })
+                .ToListAsync(cancellationToken);
+
+            var relatedRecipients = await _context.Users
+                .Where(u => query.Select(m => m.RecipientId).Contains(u.Id))
+                .Select(x => new { x.UserName, x.Id })
+                .ToListAsync(cancellationToken);
 
             var messages = await query.ToListAsync(cancellationToken);
 
