@@ -9,7 +9,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetReminder
     {
-        public record Query(string UserId, int ReminderId) : IRequest<ReminderResponse>();
+        public record Query(string UserId, int ReminderId) : IRequest<ReminderResponse>;
 
         public class Handler : IRequestHandler<Query, ReminderResponse>
         {

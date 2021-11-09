@@ -9,7 +9,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetExam
     {
-        public record Query(string UserId, int ExamId) : IRequest<ExamDetailResponse>();
+        public record Query(string UserId, int ExamId) : IRequest<ExamDetailResponse>;
 
         public class Handler : IRequestHandler<Query, ExamDetailResponse>
         {

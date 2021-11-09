@@ -9,7 +9,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetSubject
     {
-        public record Query(string UserId, int Subjectid) : IRequest<SubjectDetailResponse>();
+        public record Query(string UserId, int Subjectid) : IRequest<SubjectDetailResponse>;
 
         public class Handler : IRequestHandler<Query, SubjectDetailResponse>
         {

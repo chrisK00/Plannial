@@ -38,10 +38,7 @@ namespace Plannial.Core.Queries
             {
                 var otherUser = await _userRepository.GetUserByEmailAsync(request.OtherUserEmail);
 
-                if (otherUser == null)
-                {
-                    throw new KeyNotFoundException("Could not find user with the specified email");
-                }
+                _ = otherUser ?? throw new KeyNotFoundException("Could not find user with the specified email");
 
                 var messages = await _messageRepository.GetMessageThreadAsync(request.UserId, otherUser.Id, cancellationToken);
                 var user = await _userRepository.GetUserAsync(request.UserId);

@@ -11,8 +11,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetReminders
     {
-        public record Query(string UserId, ReminderParams ReminderParams) : IRequest<IEnumerable<ReminderResponse>>();
-
+        public record Query(string UserId, ReminderParams ReminderParams) : IRequest<IEnumerable<ReminderResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<ReminderResponse>>
         {

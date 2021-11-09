@@ -18,8 +18,7 @@ namespace Plannial.Core.Commands.AddCommands
 {
     public static class AddReminder
     {
-        public record Command(string UserId, string Name, string Description, DateTime? DueDate, Priority Priority)
-            : IRequest<ReminderResponse>();
+        public record Command(string UserId, string Name, string Description, DateTime? DueDate, Priority Priority) : IRequest<ReminderResponse>;
 
         public class Handler : IRequestHandler<Command, ReminderResponse>
         {

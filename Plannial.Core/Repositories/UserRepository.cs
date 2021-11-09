@@ -30,6 +30,7 @@ namespace Plannial.Core.Repositories
             {
                 sb.Append(error.Description);
             }
+
             throw new InvalidOperationException(sb.ToString());
         }
 

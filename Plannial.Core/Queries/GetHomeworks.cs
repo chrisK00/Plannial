@@ -10,7 +10,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetHomeworks
     {
-        public record Query(int? SubjectId, string UserId) : IRequest<IEnumerable<HomeworkListResponse>>();
+        public record Query(int? SubjectId, string UserId) : IRequest<IEnumerable<HomeworkListResponse>>;
 
         public class Handler : IRequestHandler<Query, IEnumerable<HomeworkListResponse>>
         {

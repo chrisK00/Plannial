@@ -9,7 +9,7 @@ namespace Plannial.Core.Queries
 {
     public static class GetHomework
     {
-        public record Query(string UserId, int HomeworkId) : IRequest<HomeworkDetailResponse>();
+        public record Query(string UserId, int HomeworkId) : IRequest<HomeworkDetailResponse>;
 
         public class Handler : IRequestHandler<Query, HomeworkDetailResponse>
         {
