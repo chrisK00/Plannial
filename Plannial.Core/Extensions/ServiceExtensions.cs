@@ -28,6 +28,7 @@ namespace Plannial.Core.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IMessageReadRepository, MessageReadRepository>();
 
             services.AddScoped<ITokenService, TokenService>();
 
@@ -80,6 +81,7 @@ namespace Plannial.Core.Extensions
                         {
                             context.Token = accessToken;
                         }
+
                         return Task.CompletedTask;
                     }
                 };
