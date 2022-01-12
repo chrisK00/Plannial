@@ -1,14 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Mappers;
-using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Queries
 {
@@ -61,7 +60,7 @@ namespace Plannial.Core.Queries
 
                 if (!await _unitOfWork.SaveChangesAsync(cancellationToken))
                 {
-                    _logger.LogWarning($"No messages to mark as read");
+                    _logger.LogWarning("No messages to mark as read");
                 }
 
                 return messageResponses;

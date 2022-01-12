@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Extensions;
-using Plannial.Core.Models.Requests;
-using Plannial.Core.Models.Responses;
 using Plannial.Core.Queries;
+using Plannial.Core.Requests;
+using Plannial.Data.Models.Responses;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Plannial.Api.Controllers
 {

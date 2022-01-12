@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Plannial.Core.Interfaces;
+using Plannial.Data.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Plannial.Core.Commands.RemoveCommands
 {

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Models.Entities;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Plannial.Core.Commands.RemoveCommands
 {
@@ -31,7 +29,7 @@ namespace Plannial.Core.Commands.RemoveCommands
 
             protected override async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var reminders = await _reminderRepository.GetRemindersAsync(request.UserId, request.ReminderIds);
+                var reminders = await _reminderRepository.GetRemindersAsync(request.UserId, request.ReminderIds, cancellationToken);
                 ICollection<Reminder> remindersToRemove = new List<Reminder>();
 
                 if (reminders.Count < 1)

@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Plannial.Core.Commands;
-using Plannial.Core.Models.Requests;
-using Plannial.Core.Models.Responses;
+using Plannial.Core.Requests;
+using Plannial.Data.Models.Responses;
+using System.Threading.Tasks;
 
 namespace Plannial.Api.Controllers
 {

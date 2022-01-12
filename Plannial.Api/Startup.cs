@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,10 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Plannial.Api.Extensions;
 using Plannial.Api.Hubs;
 using Plannial.Api.Middlewares;
 using Plannial.Core.Extensions;
-using Plannial.Core.Models.Requests.Validators;
+using Plannial.Core.Requests.Validators;
+using Plannial.Data.Extensions;
+using System;
+using System.IO;
 
 namespace Plannial.Api
 {
@@ -26,11 +28,12 @@ namespace Plannial.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureServices(Configuration);
-            services.ConfigureIdentityServices(Configuration);
+            services.AddCoreServices();
+            services.AddDataServices(Configuration);
+            services.AddAuth(Configuration);
 
             services.AddCors();
-
+            services.AddSignalR();
             services.AddControllers()
                 .AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<AddSubjectRequestValidator>());
 
@@ -57,7 +60,7 @@ namespace Plannial.Api
 
             app.UseRouting();
 
-            app.UseCors(config => config.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            //app.UseCors(config => config.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();

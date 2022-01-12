@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Plannial.Core.Commands.AddCommands;
 using Plannial.Core.Extensions;
-using Plannial.Core.Models.Requests;
 using Plannial.Core.Queries;
+using Plannial.Core.Requests;
+using System.Threading.Tasks;
 
 namespace Plannial.Api.Hubs
 {
@@ -42,7 +41,8 @@ namespace Plannial.Api.Hubs
         {
             //evaluates the values of each char in the strings.
             var userIdIsLessThanOtherUserId = string.CompareOrdinal(userId, otherUserId) < 0;
-            return userIdIsLessThanOtherUserId ? $"{userId}-{otherUserId}" : $"{otherUserId}-{userId}"; 
+
+            return userIdIsLessThanOtherUserId ? $"{userId}-{otherUserId}" : $"{otherUserId}-{userId}";
         }
     }
 }

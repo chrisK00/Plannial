@@ -1,4 +1,7 @@
 # Plannial
+Api project = Presentation Layer
+Core project = Business Logic Layer
+Data project = Data Access Layer
 
 - A pragmatic REST api
 - CQRS with MediatR, N-tier, Repository pattern with UnitOfWork

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Responses;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Models.Responses;
 
 namespace Plannial.Core.Commands
 {

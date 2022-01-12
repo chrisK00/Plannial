@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Models.Responses;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Responses;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Plannial.Core.Queries
 {
@@ -28,8 +28,9 @@ namespace Plannial.Core.Queries
 
             public async Task<IEnumerable<SubjectListResponse>> Handle(Query request, CancellationToken cancellationToken)
             {
-                _logger.LogInformation($"Getting subjects");
+                _logger.LogInformation("Getting subjects");
                 var subjects = await _subjectRepository.GetSubjectsAsync(request.UserId, cancellationToken);
+
                 return _mapper.Map<IEnumerable<SubjectListResponse>>(subjects);
             }
         }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Plannial.Core.Data;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Repositories;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Repositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Plannial.Tests.RepositoryTests

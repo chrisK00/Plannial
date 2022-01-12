@@ -1,14 +1,14 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Plannial.Core.Commands;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Mappers;
-using Plannial.Core.Models.Entities;
+using Plannial.Data.Helpers;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Entities;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Plannial.Tests.HandlerTests
@@ -21,7 +21,6 @@ namespace Plannial.Tests.HandlerTests
         private readonly Mock<ILogger<UpdateExam.Handler>> _logger = new();
 
         private readonly UpdateExam.Handler _subject;
-
 
         public UpdateExamTests()
         {
@@ -37,7 +36,6 @@ namespace Plannial.Tests.HandlerTests
             await _subject.Invoking(_ => _.Handle(command, default))
                 .Should().ThrowExactlyAsync<UnauthorizedAccessException>();
         }
-
 
         [Fact]
         public async Task UpdateExam_Returns_UpdatedExam()

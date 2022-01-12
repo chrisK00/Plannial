@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Mappers;
 using Plannial.Core.Queries;
+using Plannial.Data.Helpers;
+using Plannial.Data.Interfaces;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Plannial.Tests.HandlerTests

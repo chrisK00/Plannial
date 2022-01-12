@@ -1,8 +1,8 @@
-﻿using System.Threading;
+﻿using MediatR;
+using Plannial.Data.Interfaces;
+using Plannial.Data.Models.Entities;
+using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Plannial.Core.Interfaces;
-using Plannial.Core.Models.Entities;
 
 namespace Plannial.Core.Commands
 {
