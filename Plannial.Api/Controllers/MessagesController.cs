@@ -41,11 +41,11 @@ namespace Plannial.Api.Controllers
             return Ok(messages);
         }
 
-        [HttpGet("{userId}/thread")]
-        public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessageThread(string userId, CancellationToken cancellationToken)
+        [HttpGet("{email}/thread")]
+        public async Task<ActionResult<IEnumerable<MessageResponse>>> GetMessageThread(string email, CancellationToken cancellationToken)
         {
             var messages = await _mediator.Send(
-                new GetMessageThread.Query(User.GetUserId(), userId), cancellationToken);
+                new GetMessageThread.Query(User.GetUserId(), email), cancellationToken);
 
             return Ok(messages);
         }
