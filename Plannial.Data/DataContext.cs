@@ -11,7 +11,6 @@ namespace Plannial.Core.Data
         {
         }
 
-        public DbSet<Grade> Grades { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Exam> Exams { get; set; }
