@@ -35,7 +35,7 @@ namespace Plannial.Api.Middlewares
                 var response = context.Response;
                 response.ContentType = "application/json";
 
-                context.Response.StatusCode = ex switch
+                response.StatusCode = ex switch
                 {
                     KeyNotFoundException => StatusCodes.Status404NotFound,
                     InvalidOperationException => StatusCodes.Status400BadRequest,
